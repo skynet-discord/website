@@ -8,21 +8,32 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header__content">
-                <h1 class="header__title">Правила проекта Frendly</h1>
-                <p class="header__subtitle">Последнее обновление: 05.05.2025 | 15:02</p>
-                <p class="header__subtitle">Обновление страницы занимает от 5 до 10 минут</p>
+                <div class="header__badge">ОФИЦИАЛЬНЫЕ ПРАВИЛА</div>
+                <h1 class="header__title">Проект <span class="highlight">Frendly</span></h1>
+                <div class="header__meta">
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Последнее обновление: 05.05.2025 | 15:02</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Обновление страницы: 5-10 минут</span>
+                    </div>
+                </div>
             </div>
             <nav class="nav">
                 <ul class="nav__list">
-                    <li class="nav__item"><a href="#general" class="nav__link">Основные положения</a></li>
-                    <li class="nav__item"><a href="#prohibited-actions" class="nav__link">Запрещённые действия</a></li>
-                    <li class="nav__item"><a href="#op-restrictions" class="nav__link">Ограничения OP</a></li>
+                    <li class="nav__item"><a href="#general" class="nav__link"><i class="fas fa-book"></i> Основные положения</a></li>
+                    <li class="nav__item"><a href="#prohibited-actions" class="nav__link"><i class="fas fa-ban"></i> Запрещённые действия</a></li>
+                    <li class="nav__item"><a href="#prohibited-weapons" class="nav__link"><i class="fas fa-gun"></i> Запрещённое оружие</a></li>
+                    <li class="nav__item"><a href="#op-restrictions" class="nav__link"><i class="fas fa-user-shield"></i> Ограничения OP</a></li>
                 </ul>
             </nav>
         </div>
@@ -31,98 +42,119 @@
     <main class="main">
         <div class="container">
             <section id="general" class="section">
-                <h2 class="section__title">Основные положения</h2>
+                <div class="section__header">
+                    <h2 class="section__title">Основные положения</h2>
+                    <div class="section__icon"><i class="fas fa-book-open"></i></div>
+                </div>
                 <p class="section__text">Проект Frendly создан для честной игры и дружеского общения. Все участники обязаны соблюдать установленные правила для поддержания комфортной игровой среды.</p>
-                <div class="rules-card">
-                    <p class="rules-card__text">Нарушение правил может привести к временному или постоянному ограничению доступа к проекту.</p>
+                <div class="notice-card notice-card--info">
+                    <div class="notice-card__icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="notice-card__content">
+                        <h3 class="notice-card__title">Важно!</h3>
+                        <p class="notice-card__text">Нарушение правил может привести к временному или постоянному ограничению доступа к проекту.</p>
+                    </div>
                 </div>
             </section>
 
             <section id="prohibited-actions" class="section">
-                <h2 class="section__title">Запрещённые действия</h2>
-                <ul class="rules-list">
-                    <li class="rules-list__item">
-                        <span class="rules-list__icon">🚫</span>
-                        Использование читов, ботов и любых программных модификаций
-                    </li>
-                    <li class="rules-list__item">
-                        <span class="rules-list__icon">🚫</span>
-                        Оскорбления, грубость и токсичное поведение в чате
-                    </li>
-                    <li class="rules-list__item">
-                        <span class="rules-list__icon">🚫</span>
-                        Разглашение личных данных без согласия владельца
-                    </li>
-                    <li class="rules-list__item">
-                        <span class="rules-list__icon">🚫</span>
-                        Спам, реклама и распространение вредоносных ссылок
-                    </li>
-                    <li class="rules-list__item">
-                        <span class="rules-list__icon">🚫</span>
-                        Злоупотребление игровыми механиками или багами
-                    </li>
-                </ul>
-            </section>
-
-            <section id="prohibited-weapons" class="section">
-                <h2 class="section__title">Разрешеная военная техника на сервере</h2>
-                <ul class="weapons-list">
-                    <li class="weapons-list__item">БМП-2,AH-6 Little Brid</li>
-                </ul>
-            </section>
-
-            <section id="prohibited-weapons" class="section">
-                <h2 class="section__title">Запрещённое оружие</h2>
-                <div class="warning-box">
-                    <p class="warning-box__text">Использование следующего оружия приведёт к автоматическому бану:</p>
+                <div class="section__header">
+                    <h2 class="section__title">Запрещённые действия</h2>
+                    <div class="section__icon"><i class="fas fa-exclamation-triangle"></i></div>
                 </div>
-                <ul class="weapons-list">
-                    <li class="weapons-list__item">54MK42,138.6MM5O Mle1934 R1938,H PJ-11 CIWS</li>
-                    <li class="weapons-list__item">Энергетическая пушка Аннигилятор,катер</li>
-                    <li class="weapons-list__item">LAV-150 Commando,Prism Tank,Obt YX-100</li>
-                </ul>
+                <div class="rules-grid">
+                    <div class="rule-card rule-card--danger">
+                        <div class="rule-card__icon"><i class="fas fa-code"></i></div>
+                        <h3 class="rule-card__title">Читы и модификации</h3>
+                        <p class="rule-card__text">Использование читов, ботов и любых программных модификаций</p>
+                    </div>
+                    <div class="rule-card rule-card--danger">
+                        <div class="rule-card__icon"><i class="fas fa-comment-slash"></i></div>
+                        <h3 class="rule-card__title">Токсичное поведение</h3>
+                        <p class="rule-card__text">Оскорбления, грубость и токсичное поведение в чате</p>
+                    </div>
+                    <div class="rule-card rule-card--danger">
+                        <div class="rule-card__icon"><i class="fas fa-user-secret"></i></div>
+                        <h3 class="rule-card__title">Конфиденциальность</h3>
+                        <p class="rule-card__text">Разглашение личных данных без согласия владельца</p>
+                    </div>
+                    <div class="rule-card rule-card--danger">
+                        <div class="rule-card__icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="rule-card__title">Эксплуатация багов</h3>
+                        <p class="rule-card__text">Злоупотребление игровыми механиками или багами</p>
+                    </div>
+                </div>
             </section>
 
             <section id="prohibited-weapons" class="section">
-                <h2 class="section__title">Запрещённая военная техника на сервере</h2>
-                <div class="warning-box">
-                    <p class="warning-box__text">Использование следующего оружия приведёт к автоматическому бану:</p>
+                <div class="section__header">
+                    <h2 class="section__title">Запрещённое оружие</h2>
+                    <div class="section__icon"><i class="fas fa-skull-crossbones"></i></div>
                 </div>
-                <ul class="weapons-list">
-                    <li class="weapons-list__item">Folding Hander, Второй Апокалипсис, Страж</li>
-                    <li class="weapons-list__item">Гиперзвуковая пушка, Суперзвуковой дробовик</li>
-                    <li class="weapons-list__item">Звуковолновая винтовка, Охотник за душами MKII</li>
-                    <li class="weapons-list__item">Hollenfire MKII, Тайфунчик, Атлантическое копьё</li>
-                </ul>
-            </section>
-
-            <section id="prohibited-weapons" class="section">
-                <h2 class="section__title">Запрещённые турели на сервере</h2>
-                <div class="warning-box">
-                    <p class="warning-box__text">Использование следующего оружия приведёт к автоматическому бану:</p>
+                <div class="notice-card notice-card--warning">
+                    <div class="notice-card__icon"><i class="fas fa-exclamation-circle"></i></div>
+                    <div class="notice-card__content">
+                        <h3 class="notice-card__title">Автоматический бан!</h3>
+                        <p class="notice-card__text">Использование следующего оружия приведёт к автоматическому бану без предупреждения</p>
+                    </div>
                 </div>
-                <ul class="weapons-list">
-                    <li class="weapons-list__item">Защитная лазерная турель</li>
-                </ul>
+                <div class="weapons-grid">
+                    <div class="weapon-tag">Folding Hander</div>
+                    <div class="weapon-tag">Второй Апокалипсис</div>
+                    <div class="weapon-tag">Страж</div>
+                    <div class="weapon-tag">Гиперзвуковая пушка</div>
+                    <div class="weapon-tag">Суперзвуковой дробовик</div>
+                    <div class="weapon-tag">Звуковолновая винтовка</div>
+                    <div class="weapon-tag">Охотник за душами MKII</div>
+                    <div class="weapon-tag">Hollenfire MKII</div>
+                    <div class="weapon-tag">Тайфунчик</div>
+                    <div class="weapon-tag">Атлантическое копьё</div>
+                </div>
             </section>
 
             <section id="op-restrictions" class="section">
-                <h2 class="section__title">Ограничения для игроков с OP</h2>
-                <div class="columns">
-                    <div class="column">
-                        <h3 class="column__title">Разрешено</h3>
-                        <ul class="allowed-list">
-                            <li class="allowed-list__item">Вход в креатив и выживание</li>
-                            <li class="allowed-list__item">Изменение времени суток</li>
-                            <li class="allowed-list__item">Изменение погоды</li>
+                <div class="section__header">
+                    <h2 class="section__title">Ограничения для OP</h2>
+                    <div class="section__icon"><i class="fas fa-user-crown"></i></div>
+                </div>
+                <div class="permissions-container">
+                    <div class="permissions-column permissions-column--allowed">
+                        <div class="permissions-header">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Разрешено</h3>
+                        </div>
+                        <ul class="permissions-list">
+                            <li class="permissions-item">
+                                <i class="fas fa-check"></i>
+                                <span>Вход в креатив и выживание</span>
+                            </li>
+                            <li class="permissions-item">
+                                <i class="fas fa-check"></i>
+                                <span>Изменение времени суток</span>
+                            </li>
+                            <li class="permissions-item">
+                                <i class="fas fa-check"></i>
+                                <span>Изменение погоды</span>
+                            </li>
                         </ul>
                     </div>
-                    <div class="column">
-                        <h3 class="column__title">Запрещено</h3>
-                        <ul class="prohibited-list">
-                            <li class="prohibited-list__item">/ban, /kick, /kill, /banip</li>
-                            <li class="prohibited-list__item">/deop</li>
-                            <li class="prohibited-list__item">/op</li>
+                    <div class="permissions-column permissions-column--prohibited">
+                        <div class="permissions-header">
+                            <i class="fas fa-times-circle"></i>
+                            <h3>Запрещено</h3>
+                        </div>
+                        <ul class="permissions-list">
+                            <li class="permissions-item">
+                                <i class="fas fa-times"></i>
+                                <span>/ban, /kick, /kill, /banip</span>
+                            </li>
+                            <li class="permissions-item">
+                                <i class="fas fa-times"></i>
+                                <span>/deop</span>
+                            </li>
+                            <li class="permissions-item">
+                                <i class="fas fa-times"></i>
+                                <span>/op</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -133,8 +165,17 @@
     <footer class="footer">
         <div class="container">
             <div class="footer__content">
-                <p class="footer__copyright">&copy; 2025 Проект Frendly | Все права защищены</p>
-                <a href="#top" class="footer__back-to-top">Наверх ↑</a>
+                <div class="footer__logo">Frendly</div>
+                <p class="footer__copyright">&copy; 2025 Проект Frendly. Все права защищены.</p>
+                <div class="footer__links">
+                    <a href="#" class="footer__link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="footer__link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="footer__link"><i class="fab fa-vk"></i></a>
+                </div>
+                <a href="#top" class="footer__back-to-top">
+                    <i class="fas fa-arrow-up"></i>
+                    Наверх
+                </a>
             </div>
         </div>
     </footer>
