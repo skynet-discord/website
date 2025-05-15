@@ -3,192 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Официальные правила проекта Frendly - правила поведения и ограничения">
-    <title>Правила проекта Friendly</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>FunQuest - Главная</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a, #a855f7);
+            position: relative;
+            overflow-x: hidden;
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="header__content">
-                <div class="header__badge">ОФИЦИАЛЬНЫЕ ПРАВИЛА</div>
-                <h1 class="header__title">Проект <span class="highlight">Frendly</span></h1>
-                <div class="header__meta">
-                    <div class="meta-item">
-                        <i class="fas fa-clock"></i>
-                        <span>Последнее обновление: 05.05.2025 | 15:02</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-sync-alt"></i>
-                        <span>Обновление страницы: 5-10 минут</span>
-                    </div>
-                </div>
-            </div>
-            <nav class="nav">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="#general" class="nav__link"><i class="fas fa-book"></i> Основные положения</a></li>
-                    <li class="nav__item"><a href="#prohibited-actions" class="nav__link"><i class="fas fa-ban"></i> Запрещённые действия</a></li>
-                    <li class="nav__item"><a href="#prohibited-weapons" class="nav__link"><i class="fas fa-gun"></i> Запрещённое оружие</a></li>
-                    <li class="nav__item"><a href="#op-restrictions" class="nav__link"><i class="fas fa-user-shield"></i> Ограничения OP</a></li>
-                </ul>
-            </nav>
+<body class="font-sans text-gray-100 min-h-screen flex flex-col p-6">
+    <nav class="w-full max-w-4xl mx-auto mb-8" data-aos="fade-down">
+        <ul class="flex justify-center space-x-6">
+            <li><a href="index.html" class="text-lg text-white font-bold bg-purple-600 px-4 py-2 rounded-lg">Главная</a></li>
+            <li><a href="quizzes.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Викторины</a></li>
+            <li><a href="quests.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Квесты</a></li>
+        </ul>
+    </nav>
+
+    <div class="max-w-4xl w-full text-center mx-auto flex-1 flex flex-col justify-center">
+        <h1 class="text-5xl font-extrabold text-white mb-10 tracking-widest" data-aos="zoom-in">FunQuest</h1>
+
+        <div class="card bg-gray-800 bg-opacity-90 p-8 rounded-2xl" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-purple-400 mb-6">Добро пожаловать в FunQuest!</h2>
+            <p class="text-lg text-gray-200 mb-6">FunQuest — это твоя площадка для захватывающих приключений и проверки знаний. Мы создали пространство, где можно с головой погрузиться в увлекательные испытания и раскрыть свои способности.</p>
+
+            <h3 class="text-2xl font-semibold text-teal-400 mb-4">Что тебя ждёт?</h3>
+            <ul class="text-lg text-gray-200 space-y-4 mb-6">
+                <li class="flex items-center justify-center">Викторины, которые бросят вызов твоей эрудиции: от древних загадок истории до современных тайн поп-культуры.</li>
+                <li class="flex items-center justify-center">Квесты с глубокими сюжетами: стань героем фэнтези, раскрой дело как детектив или отправься в космос.</li>
+                <li class="flex items-center justify-center">Испытания на время: каждая секунда на счету, выбирай быстро и мудро, чтобы стать лучшим.</li>
+            </ul>
+
+            <p class="text-lg text-gray-200">Погрузись в мир FunQuest и найди своё приключение! Выбирай раздел в меню и начинай уже сейчас.</p>
         </div>
-    </header>
+    </div>
 
-    <main class="main">
-        <div class="container">
-            <section id="general" class="section">
-                <div class="section__header">
-                    <h2 class="section__title">Основные положения</h2>
-                    <div class="section__icon"><i class="fas fa-book-open"></i></div>
-                </div>
-                <p class="section__text">Проект Frendly создан для честной игры и дружеского общения. Все участники обязаны соблюдать установленные правила для поддержания комфортной игровой среды.</p>
-                <div class="notice-card notice-card--info">
-                    <div class="notice-card__icon"><i class="fas fa-info-circle"></i></div>
-                    <div class="notice-card__content">
-                        <h3 class="notice-card__title">Важно!</h3>
-                        <p class="notice-card__text">Нарушение правил может привести к временному или постоянному ограничению доступа к проекту.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="prohibited-actions" class="section">
-                <div class="section__header">
-                    <h2 class="section__title">Запрещённые действия</h2>
-                    <div class="section__icon"><i class="fas fa-exclamation-triangle"></i></div>
-                </div>
-                <div class="rules-grid">
-                    <div class="rule-card rule-card--danger">
-                        <div class="rule-card__icon"><i class="fas fa-code"></i></div>
-                        <h3 class="rule-card__title">Читы и модификации</h3>
-                        <p class="rule-card__text">Использование читов, ботов и любых программных модификаций</p>
-                    </div>
-                    <div class="rule-card rule-card--danger">
-                        <div class="rule-card__icon"><i class="fas fa-comment-slash"></i></div>
-                        <h3 class="rule-card__title">Токсичное поведение</h3>
-                        <p class="rule-card__text">Оскорбления, грубость и токсичное поведение в чате</p>
-                    </div>
-                    <div class="rule-card rule-card--danger">
-                        <div class="rule-card__icon"><i class="fas fa-user-secret"></i></div>
-                        <h3 class="rule-card__title">Конфиденциальность</h3>
-                        <p class="rule-card__text">Разглашение личных данных без согласия владельца</p>
-                    </div>
-                    <div class="rule-card rule-card--danger">
-                        <div class="rule-card__icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3 class="rule-card__title">Эксплуатация багов</h3>
-                        <p class="rule-card__text">Злоупотребление игровыми механиками или багами</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="prohibited-weapons" class="section">
-                <div class="section__header">
-                    <h2 class="section__title">Запрещённое оружие, турели, техника</h2>
-                    <div class="section__icon"><i class="fas fa-skull-crossbones"></i></div>
-                </div>
-                <div class="notice-card notice-card--warning">
-                    <div class="notice-card__icon"><i class="fas fa-exclamation-circle"></i></div>
-                    <div class="notice-card__content">
-                        <h3 class="notice-card__title">Автоматический бан!</h3>
-                        <p class="notice-card__text">Использование следующего оружия приведёт к автоматическому бану без предупреждения</p>
-                    </div>
-                </div>
-                <div class="weapons-grid">
-                    <div class="weapon-tag">Folding Hander</div>
-                    <div class="weapon-tag">Второй Апокалипсис</div>
-                    <div class="weapon-tag">Страж</div>
-                    <div class="weapon-tag">Гиперзвуковая пушка</div>
-                    <div class="weapon-tag">Суперзвуковой дробовик</div>
-                    <div class="weapon-tag">Звуковолновая винтовка</div>
-                    <div class="weapon-tag">Охотник за душами MKII</div>
-                    <div class="weapon-tag">Hollenfire MKII</div>
-                    <div class="weapon-tag">Тайфунчик</div>
-                    <div class="weapon-tag">Катер</div>
-                    <div class="weapon-tag">Энергетическая пушка Аннигилятор</div>
-                    <div class="weapon-tag">H PJ-11 CIWS</div>
-                    <div class="weapon-tag">138.6MM5O Mle1934 R1938</div>
-                    <div class="weapon-tag">54MK42</div>
-                    <div class="weapon-tag">LAV-150 Commando</div>
-                    <div class="weapon-tag">Prism Tank</div>
-                    <div class="weapon-tag">Obt YX-100</div>
-                    <div class="weapon-tag">Защитная лазерная турель</div>
-                    <div class="weapon-tag">Little Brid</div>
-                    <div class="weapon-tag">AH-6</div>
-                    <div class="weapon-tag">БМП-2</div>
-                </div>
-            </section>
-
-            <section id="op-restrictions" class="section">
-                <div class="section__header">
-                    <h2 class="section__title">Ограничения для OP</h2>
-                    <div class="section__icon"><i class="fas fa-user-crown"></i></div>
-                </div>
-                <div class="permissions-container">
-                    <div class="permissions-column permissions-column--allowed">
-                        <div class="permissions-header">
-                            <i class="fas fa-check-circle"></i>
-                            <h3>Разрешено</h3>
-                        </div>
-                        <ul class="permissions-list">
-                            <li class="permissions-item">
-                                <i class="fas fa-check"></i>
-                                <span>Вход в креатив и выживание</span>
-                            </li>
-                            <li class="permissions-item">
-                                <i class="fas fa-check"></i>
-                                <span>Изменение времени суток</span>
-                            </li>
-                            <li class="permissions-item">
-                                <i class="fas fa-check"></i>
-                                <span>Изменение погоды</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="permissions-column permissions-column--prohibited">
-                        <div class="permissions-header">
-                            <i class="fas fa-times-circle"></i>
-                            <h3>Запрещено</h3>
-                        </div>
-                        <ul class="permissions-list">
-                            <li class="permissions-item">
-                                <i class="fas fa-times"></i>
-                                <span>/ban, /kick, /kill, /banip</span>
-                            </li>
-                            <li class="permissions-item">
-                                <i class="fas fa-times"></i>
-                                <span>/deop</span>
-                            </li>
-                            <li class="permissions-item">
-                                <i class="fas fa-times"></i>
-                                <span>/op</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__logo">Frendly</div>
-                <p class="footer__copyright">&copy; 2025 Проект Frendly. Все права защищены.</p>
-                <div class="footer__links">
-                    <a href="#" class="footer__link"><i class="fab fa-discord"></i></a>
-                    <a href="#" class="footer__link"><i class="fab fa-telegram"></i></a>
-                    <a href="#" class="footer__link"><i class="fab fa-vk"></i></a>
-                </div>
-                <a href="#top" class="footer__back-to-top">
-                    <i class="fas fa-arrow-up"></i>
-                    Наверх
-                </a>
-            </div>
-        </div>
-    </footer>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
 </body>
 </html>
