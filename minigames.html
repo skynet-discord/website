@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunQuest - Мини-игры</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a, #a855f7);
+            position: relative;
+            overflow-x: hidden;
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .game-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .game-option:hover {
+            transform: scale(1.03);
+            background: linear-gradient(90deg, #d97777, #f1a8a8);
+        }
+        #cat {
+            position: absolute;
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .letter {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 5px;
+            background: #4b5563;
+            border-radius: 8px;
+            cursor: move;
+            user-select: none;
+        }
+        .dropzone {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 5px;
+            background: #374151;
+            border-radius: 8px;
+            min-width: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-100 min-h-screen flex flex-col p-6">
+    <nav class="w-full max-w-4xl mx-auto mb-8" data-aos="fade-down">
+        <ul class="flex justify-center space-x-6">
+            <li><a href="index.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Главная</a></li>
+            <li><a href="quizzes.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Викторины</a></li>
+            <li><a href="quests.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Квесты</a></li>
+            <li><a href="minigames.html" class="text-lg text-white font-bold bg-purple-600 px-4 py-2 rounded-lg">Мини-игры</a></li>
+        </ul>
+    </nav>
+
+    <div class="max-w-4xl w-full text-center mx-auto flex-1 flex flex-col justify-center">
+        <h1 class="text-5xl font-extrabold text-white mb-10 tracking-widest" data-aos="zoom-in">FunQuest - Мини-игры</h1>
+
+        <div class="card bg-gray-800 bg-opacity-90 p-8 rounded-2xl" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-pink-400 mb-6">Выбери мини-игру</h2>
+            <div id="game-selection" class="space-y-4">
+                <div class="game-option bg-gray-700 p-4 rounded-lg" data-game="catch-cat">
+                    <h3 class="text-xl text-pink-300">Поймай котика</h3>
+                    <p class="text-gray-300">Лови котиков, которые появляются на экране, и набери максимум очков за 30 секунд!</p>
+                </div>
+                <div class="game-option bg-gray-700 p-4 rounded-lg" data-game="guess-number">
+                    <h3 class="text-xl text-pink-300">Угадай число</h3>
+                    <p class="text-gray-300">Попробуй угадать число от 1 до 100 за 10 попыток с подсказками!</p>
+                </div>
+                <div class="game-option bg-gray-700 p-4 rounded-lg" data-game="word-puzzle">
+                    <h3 class="text-xl text-pink-300">Собери пазл слов</h3>
+                    <p class="text-gray-300">Перетаскивай буквы, чтобы составить слово из подсказки!</p>
+                </div>
+            </div>
+
+            <!-- Игра: Поймай котика -->
+            <div id="catch-cat-game" class="mt-6 hidden space-y-4 text-lg text-gray-200">
+                <div class="flex justify-between items-center">
+                    <p>Счёт: <span id="cat-score">0</span></p>
+                    <p>Осталось: <span id="cat-timer">30</span> сек</p>
+                </div>
+                <div id="cat-area" class="relative h-64 bg-gray-700 rounded-lg">
+                    <div id="cat">🐱</div>
+                </div>
+                <button id="restart-cat" class="w-full bg-gradient-to-r from-pink-500 to-pink-700 text-white py-2 rounded-lg hover:from-pink-600 hover:to-pink-800 transition">Играть снова</button>
+            </div>
+
+            <!-- Игра: Угадай число -->
+            <div id="guess-number-game" class="mt-6 hidden space-y-4 text-lg text-gray-200">
+                <p>Осталось попыток: <span id="guess-attempts">10</span></p>
+                <p id="guess-hint" class="text-pink-300"></p>
+                <input id="guess-input" type="number" min="1" max="100" class="w-full p-3 rounded-lg bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Введи число от 1 до 100">
+                <button id="guess-submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-700 text-white py-2 rounded-lg hover:from-pink-600 hover:to-pink-800 transition">Угадать</button>
+                <p id="guess-result"></p>
+                <button id="restart-guess" class="w-full bg-gradient-to-r from-pink-500 to-pink-700 text-white py-2 rounded-lg hover:from-pink-600 hover:to-pink-800 transition hidden">Играть снова</button>
+            </div>
+
+            <!-- Игра: Собери пазл слов -->
+            <div id="word-puzzle-game" class="mt-6 hidden space-y-4 text-lg text-gray-200">
+                <p>Подсказка: <span id="word-hint" class="text-pink-300"></span></p>
+                <div id="letters" class="space-x-2"></div>
+                <div id="dropzone" class="space-x-2 mt-4"></div>
+                <button id="check-word" class="w-full bg-gradient-to-r from-pink-500 to-pink-700 text-white py-2 rounded-lg hover:from-pink-600 hover:to-pink-800 transition">Проверить</button>
+                <p id="word-result"></p>
+                <button id="restart-word" class="w-full bg-gradient-to-r from-pink-500 to-pink-700 text-white py-2 rounded-lg hover:from-pink-600 hover:to-pink-800 transition hidden">Играть снова</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        const gameSelection = document.getElementById('game-selection');
+        const catchCatGame = document.getElementById('catch-cat-game');
+        const guessNumberGame = document.getElementById('guess-number-game');
+        const wordPuzzleGame = document.getElementById('word-puzzle-game');
+
+        // Переключение игр
+        document.querySelectorAll('.game-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const game = option.getAttribute('data-game');
+                gameSelection.classList.add('hidden');
+                catchCatGame.classList.add('hidden');
+                guessNumberGame.classList.add('hidden');
+                wordPuzzleGame.classList.add('hidden');
+
+                if (game === 'catch-cat') {
+                    catchCatGame.classList.remove('hidden');
+                    startCatchCat();
+                } else if (game === 'guess-number') {
+                    guessNumberGame.classList.remove('hidden');
+                    startGuessNumber();
+                } else if (game === 'word-puzzle') {
+                    wordPuzzleGame.classList.remove('hidden');
+                    startWordPuzzle();
+                }
+            });
+        });
+
+        // Игра 1: Поймай котика
+        function startCatchCat() {
+            const cat = document.getElementById('cat');
+            const catScore = document.getElementById('cat-score');
+            const catTimer = document.getElementById('cat-timer');
+            const catArea = document.getElementById('cat-area');
+            const restartCat = document.getElementById('restart-cat');
+            let score = 0;
+            let timeLeft = 30;
+            let timer;
+
+            function moveCat() {
+                const maxX = catArea.clientWidth - 40;
+                const maxY = catArea.clientHeight - 40;
+                const newX = Math.random() * maxX;
+                const newY = Math.random() * maxY;
+                cat.style.left = newX + 'px';
+                cat.style.top = newY + 'px';
+            }
+
+            cat.addEventListener('click', () => {
+                score++;
+                catScore.textContent = score;
+                moveCat();
+            });
+
+            timer = setInterval(() => {
+                timeLeft--;
+                catTimer.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    cat.style.display = 'none';
+                    catArea.innerHTML += `<p class="absolute inset-0 flex items-center justify-center text-xl">Игра окончена! Счёт: ${score}</p>`;
+                }
+            }, 1000);
+
+            moveCat();
+            restartCat.addEventListener('click', () => {
+                location.reload();
+            });
+        }
+
+        // Игра 2: Угадай число
+        function startGuessNumber() {
+            const guessInput = document.getElementById('guess-input');
+            const guessSubmit = document.getElementById('guess-submit');
+            const guessAttempts = document.getElementById('guess-attempts');
+            const guessHint = document.getElementById('guess-hint');
+            const guessResult = document.getElementById('guess-result');
+            const restartGuess = document.getElementById('restart-guess');
+
+            let targetNumber = Math.floor(Math.random() * 100) + 1;
+            let attempts = 10;
+
+            guessSubmit.addEventListener('click', () => {
+                const guess = parseInt(guessInput.value);
+                if (isNaN(guess) || guess < 1 || guess > 100) {
+                    guessResult.textContent = 'Введи число от 1 до 100!';
+                    return;
+                }
+
+                attempts--;
+                guessAttempts.textContent = attempts;
+
+                if (guess === targetNumber) {
+                    guessResult.textContent = 'Поздравляем! Ты угадал число!';
+                    guessSubmit.classList.add('hidden');
+                    restartGuess.classList.remove('hidden');
+                } else if (attempts <= 0) {
+                    guessResult.textContent = `Игра окончена! Число было: ${targetNumber}`;
+                    guessSubmit.classList.add('hidden');
+                    restartGuess.classList.remove('hidden');
+                } else {
+                    guessHint.textContent = guess > targetNumber ? 'Меньше!' : 'Больше!';
+                }
+            });
+
+            restartGuess.addEventListener('click', () => {
+                location.reload();
+            });
+        }
+
+        // Игра 3: Собери пазл слов
+        function startWordPuzzle() {
+            const words = [
+                { word: "КОТ", hint: "Домашнее животное, которое мурлычет" },
+                { word: "СОЛНЦЕ", hint: "Яркое светило на небе" },
+                { word: "ДОМ", hint: "Место, где ты живёшь" }
+            ];
+            const selectedWord = words[Math.floor(Math.random() * words.length)];
+            const lettersDiv = document.getElementById('letters');
+            const dropzoneDiv = document.getElementById('dropzone');
+            const wordHint = document.getElementById('word-hint');
+            const wordResult = document.getElementById('word-result');
+            const checkWord = document.getElementById('check-word');
+            const restartWord = document.getElementById('restart-word');
+
+            wordHint.textContent = selectedWord.hint;
+            const letters = selectedWord.word.split('').sort(() => Math.random() - 0.5);
+
+            letters.forEach((letter, index) => {
+                const letterDiv = document.createElement('div');
+                letterDiv.className = 'letter';
+                letterDiv.textContent = letter;
+                letterDiv.setAttribute('draggable', true);
+                letterDiv.id = `letter-${index}`;
+                lettersDiv.appendChild(letterDiv);
+            });
+
+            for (let i = 0; i < selectedWord.word.length; i++) {
+                const dropzone = document.createElement('div');
+                dropzone.className = 'dropzone';
+                dropzone.id = `dropzone-${i}`;
+                dropzoneDiv.appendChild(dropzone);
+            }
+
+            document.querySelectorAll('.letter').forEach(letter => {
+                letter.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text', e.target.id);
+                });
+            });
+
+            document.querySelectorAll('.dropzone').forEach(dropzone => {
+                dropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+                dropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const letterId = e.dataTransfer.getData('text');
+                    const letter = document.getElementById(letterId);
+                    if (!dropzone.textContent) {
+                        dropzone.textContent = letter.textContent;
+                        letter.style.display = 'none';
+                    }
+                });
+            });
+
+            checkWord.addEventListener('click', () => {
+                const formedWord = Array.from(dropzoneDiv.children).map(dropzone => dropzone.textContent).join('');
+                if (formedWord === selectedWord.word) {
+                    wordResult.textContent = 'Правильно! Ты составил слово!';
+                    checkWord.classList.add('hidden');
+                    restartWord.classList.remove('hidden');
+                } else {
+                    wordResult.textContent = 'Неправильно, попробуй снова!';
+                }
+            });
+
+            restartWord.addEventListener('click', () => {
+                location.reload();
+            });
+        }
+    </script>
+</body>
+</html>
