@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunQuest - Викторины</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a, #a855f7);
+            position: relative;
+            overflow-x: hidden;
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .option-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .option-item:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #6b46c1, #805ad5);
+        }
+        .option-item.selected {
+            background: linear-gradient(90deg, #4c1d95, #6b46c1);
+            border: 2px solid #a855f7;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-100 min-h-screen flex flex-col p-6">
+    <nav class="w-full max-w-4xl mx-auto mb-8" data-aos="fade-down">
+        <ul class="flex justify-center space-x-6">
+            <li><a href="index.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Главная</a></li>
+            <li><a href="quizzes.html" class="text-lg text-white font-bold bg-purple-600 px-4 py-2 rounded-lg">Викторины</a></li>
+            <li><a href="quests.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Квесты</a></li>
+        </ul>
+    </nav>
+
+    <div class="max-w-4xl w-full text-center mx-auto flex-1 flex flex-col justify-center">
+        <h1 class="text-5xl font-extrabold text-white mb-10 tracking-widest" data-aos="zoom-in">FunQuest - Викторины</h1>
+
+        <div class="card bg-gray-800 bg-opacity-90 p-8 rounded-2xl" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-purple-400 mb-6" id="quiz-title">Выбери викторину</h2>
+            <form id="quizForm" class="space-y-6">
+                <div>
+                    <label for="quiz-category" class="block text-lg text-gray-300 mb-2">Категория:</label>
+                    <select id="quiz-category" name="category" class="w-full p-3 rounded-lg bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <option value="general">Общие знания</option>
+                        <option value="history">История</option>
+                        <option value="science">Наука</option>
+                        <option value="pop-culture">Поп-культура</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="quiz-difficulty" class="block text-lg text-gray-300 mb-2">Сложность:</label>
+                    <select id="quiz-difficulty" name="difficulty" class="w-full p-3 rounded-lg bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <option value="easy">Лёгкая</option>
+                        <option value="medium">Средняя</option>
+                        <option value="hard">Сложная</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-purple-700 text-white py-3 rounded-lg hover:from-purple-600 hover:to-purple-800 transition">Начать</button>
+            </form>
+
+            <div id="quiz-game" class="mt-6 hidden space-y-4 text-left text-lg text-gray-200" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex justify-between items-center">
+                    <p id="question-text" class="text-xl flex items-center"></p>
+                    <p id="timer" class="text-lg text-red-400"></p>
+                </div>
+                <div id="answerForm" class="space-y-3">
+                    <div class="option-item bg-gray-700 p-3 rounded-lg" data-value="1">
+                        <span id="option1-text" class="text-gray-200"></span>
+                    </div>
+                    <div class="option-item bg-gray-700 p-3 rounded-lg" data-value="2">
+                        <span id="option2-text" class="text-gray-200"></span>
+                    </div>
+                    <div class="option-item bg-gray-700 p-3 rounded-lg" data-value="3">
+                        <span id="option3-text" class="text-gray-200"></span>
+                    </div>
+                    <button type="button" id="submit-answer" class="w-full bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 rounded-lg hover:from-purple-600 hover:to-purple-800 transition">Ответить</button>
+                </div>
+                <p id="result" class="text-lg"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        const quizForm = document.getElementById('quizForm');
+        const quizGame = document.getElementById('quiz-game');
+        const answerForm = document.getElementById('answerForm');
+        const submitAnswer = document.getElementById('submit-answer');
+        const questionText = document.getElementById('question-text');
+        const timerDisplay = document.getElementById('timer');
+        const resultDisplay = document.getElementById('result');
+        const quizTitle = document.getElementById('quiz-title');
+        const option1Text = document.getElementById('option1-text');
+        const option2Text = document.getElementById('option2-text');
+        const option3Text = document.getElementById('option3-text');
+
+        const questions = {
+            general: [
+                { question: "Какой океан самый большой?", options: ["Тихий", "Атлантический", "Индийский"], correct: 0 },
+                { question: "Как называется столица Бразилии?", options: ["Рио-де-Жанейро", "Сан-Паулу", "Бразилиа"], correct: 2 },
+                { question: "В каком году была открыта Америка?", options: ["1492", "1453", "1607"], correct: 0 }
+            ],
+            history: [
+                { question: "Кто был первым президентом США?", options: ["Авраам Линкольн", "Джордж Вашингтон", "Томас Джефферсон"], correct: 1 },
+                { question: "В каком году началась Вторая мировая война?", options: ["1941", "1939", "1945"], correct: 1 },
+                { question: "Как звали царя, правившего Россией во время революции 1917?", options: ["Пётр I", "Александр III", "Николай II"], correct: 2 }
+            ],
+            science: [
+                { question: "Как называется звезда, вокруг которой вращается Земля?", options: ["Луна", "Солнце", "Юпитер"], correct: 1 },
+                { question: "Какой газ составляет большую часть атмосферы Земли?", options: ["Кислород", "Азот", "Углекислый газ"], correct: 1 },
+                { question: "Как называется процесс деления клетки?", options: ["Мейоз", "Митоз", "Фотосинтез"], correct: 1 }
+            ],
+            'pop-culture': [
+                { question: "Как зовут главного героя в 'Звёздных войнах'?", options: ["Хан Соло", "Люк Скайуокер", "Дарт Вейдер"], correct: 1 },
+                { question: "Какой фильм получил Оскар в 2020?", options: ["1917", "Паразиты", "Джокер"], correct: 1 },
+                { question: "Как зовут режиссёра 'Титаника'?", options: ["Стивен Спилберг", "Кристофер Нолан", "Джеймс Кэмерон"], correct: 2 }
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let timeLeft;
+        let selectedCategory;
+        let selectedDifficulty;
+        let selectedAnswer = null;
+
+        quizForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            selectedCategory = document.getElementById('quiz-category').value;
+            selectedDifficulty = document.getElementById('quiz-difficulty').value;
+            currentQuestionIndex = 0;
+            score = 0;
+
+            quizForm.classList.add('hidden');
+            quizGame.classList.remove('hidden');
+            quizTitle.textContent = 'Викторина началась!';
+
+            const timeLimits = { easy: 15, medium: 30, hard: 60 };
+            timeLeft = timeLimits[selectedDifficulty];
+            startQuestion();
+        });
+
+        function startQuestion() {
+            if (currentQuestionIndex >= questions[selectedCategory].length) {
+                quizGame.innerHTML = `<p class="text-xl">Викторина завершена! Ваш счёт: ${score} из ${questions[selectedCategory].length}</p>`;
+                return;
+            }
+
+            const question = questions[selectedCategory][currentQuestionIndex];
+            questionText.textContent = question.question;
+            option1Text.textContent = question.options[0];
+            option2Text.textContent = question.options[1];
+            option3Text.textContent = question.options[2];
+            resultDisplay.textContent = '';
+            timerDisplay.textContent = `Осталось: ${timeLeft} сек`;
+            selectedAnswer = null;
+            document.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `Осталось: ${timeLeft} сек`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    resultDisplay.textContent = 'Время вышло!';
+                    setTimeout(() => {
+                        currentQuestionIndex++;
+                        timeLeft = { easy: 15, medium: 30, hard: 60 }[selectedDifficulty];
+                        startQuestion();
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                selectedAnswer = parseInt(item.getAttribute('data-value'));
+            });
+        });
+
+        submitAnswer.addEventListener('click', () => {
+            if (selectedAnswer === null) {
+                resultDisplay.textContent = 'Выбери ответ!';
+                return;
+            }
+
+            clearInterval(timer);
+            const correctAnswer = questions[selectedCategory][currentQuestionIndex].correct;
+
+            if (selectedAnswer - 1 === correctAnswer) {
+                score++;
+                resultDisplay.textContent = 'Правильно!';
+            } else {
+                resultDisplay.textContent = `Неправильно! Правильный ответ: ${questions[selectedCategory][currentQuestionIndex].options[correctAnswer]}`;
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                timeLeft = { easy: 15, medium: 30, hard: 60 }[selectedDifficulty];
+                startQuestion();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
