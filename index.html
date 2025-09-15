@@ -1,57 +1,366 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FunQuest - Главная</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <title>Список присутності</title>
     <style>
         body {
-            background: linear-gradient(135deg, #1e3a8a, #a855f7);
-            position: relative;
-            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
         }
-        .card {
-            transition: all 0.3s ease;
+        h1 {
+            color: #0d6efd;
+            text-align: center;
+            margin-bottom: 25px;
         }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .search-input, .select-all-btn {
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .search-input {
+            flex-grow: 1;
+        }
+        .select-all-btn {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+        .select-all-btn:hover {
+            background-color: #0b5ed7;
+        }
+        .student-list {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .student-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .student-item:last-child {
+            border-bottom: none;
+        }
+        .student-name {
+            flex-grow: 1;
+            font-size: 16px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .status {
+            font-size: 14px;
+            color: #6c757d;
+            min-width: 80px;
+        }
+        .present {
+            color: #198754;
+        }
+        .absent {
+            color: #dc3545;
+        }
+        .summary {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .hidden {
+            display: none;
+        }
+        @media (max-width: 580px) {
+            .student-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .checkbox-container {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+            .controls {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
-<body class="font-sans text-gray-100 min-h-screen flex flex-col p-6">
-    <nav class="w-full max-w-4xl mx-auto mb-8" data-aos="fade-down">
-        <ul class="flex justify-center space-x-6">
-            <li><a href="index.html" class="text-lg text-white font-bold bg-purple-600 px-4 py-2 rounded-lg">Главная</a></li>
-            <li><a href="quizzes.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Викторины</a></li>
-            <li><a href="quests.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Квесты</a></li>
-            <li><a href="minigames.html" class="text-lg text-gray-300 hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition">Мини-игры</a></li>
-        </ul>
-    </nav>
+<body>
+    <h1>Список присутності</h1>
 
-    <div class="max-w-4xl w-full text-center mx-auto flex-1 flex flex-col justify-center">
-        <h1 class="text-5xl font-extrabold text-white mb-10 tracking-widest" data-aos="zoom-in">FunQuest</h1>
+    <div class="controls">
+        <input type="text" class="search-input" placeholder="Пошук за ім'ям...">
+        <button class="select-all-btn" onclick="toggleSelectAll()">Обрати всіх</button>
+    </div>
 
-        <div class="card bg-gray-800 bg-opacity-90 p-8 rounded-2xl" data-aos="fade-up">
-            <h2 class="text-3xl font-bold text-purple-400 mb-6">Добро пожаловать в FunQuest!</h2>
-            <p class="text-lg text-gray-200 mb-6">FunQuest — это твоя площадка для захватывающих приключений и проверки знаний. Мы создали пространство, где можно с головой погрузиться в увлекательные испытания и раскрыть свои способности.</p>
-
-            <h3 class="text-2xl font-semibold text-teal-400 mb-4">Что тебя ждёт?</h3>
-            <ul class="text-lg text-gray-200 space-y-4 mb-6">
-                <li class="flex items-center justify-center">Викторины, которые бросят вызов твоей эрудиции: от древних загадок истории до современных тайн поп-культуры.</li>
-                <li class="flex items-center justify-center">Квесты с глубокими сюжетами: стань героем фэнтези, раскрой дело как детектив или отправься в космос.</li>
-                <li class="flex items-center justify-center">Испытания на время: каждая секунда на счету, выбирай быстро и мудро, чтобы стать лучшим.</li>
-            </ul>
-
-            <p class="text-lg text-gray-200">Погрузись в мир FunQuest и найди своё приключение! Выбирай раздел в меню и начинай уже сейчас.</p>
+    <div class="student-list">
+        <div class="student-item" data-name="Балаклієць Олександр">
+            <div class="student-name">Балаклієць Олександр</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student1">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Борисов Валерій">
+            <div class="student-name">Борисов Валерій</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student2">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Булах Максим">
+            <div class="student-name">Булах Максим</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student3">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Вакуленко Олександр">
+            <div class="student-name">Вакуленко Олександр</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student4">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Готв'янський Данило">
+            <div class="student-name">Готв'янський Данило</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student5">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Дейнека Денис">
+            <div class="student-name">Дейнека Денис</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student6">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Дятлов Микола">
+            <div class="student-name">Дятлов Микола</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student7">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Зуб Данило">
+            <div class="student-name">Зуб Данило</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student8">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Зубрицька Анастасія">
+            <div class="student-name">Зубрицька Анастасія</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student9">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Калатур Богдан">
+            <div class="student-name">Калатур Богдан</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student10">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Каніболоцька Мирослава">
+            <div class="student-name">Каніболоцька Мирослава</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student11">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Кравченко Андрій">
+            <div class="student-name">Кравченко Андрій</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student12">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Кутаков Руслан">
+            <div class="student-name">Кутаков Руслан</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student13">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Ледянкін Давид">
+            <div class="student-name">Ледянкін Давид</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student14">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Максимов Семен">
+            <div class="student-name">Максимов Семен</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student15">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Малярчук Поліна">
+            <div class="student-name">Малярчук Поліна</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student16">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Михайлін Тимур">
+            <div class="student-name">Михайлін Тимур</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student17">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Михальов Микита">
+            <div class="student-name">Михальов Микита</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student18">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Морозова Мирослава">
+            <div class="student-name">Морозова Мирослава</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student19">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Никифоров Володимир">
+            <div class="student-name">Никифоров Володимир</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student20">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Попко Дар'я">
+            <div class="student-name">Попко Дар'я</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student21">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Пузаненко Ілля">
+            <div class="student-name">Пузаненко Ілля</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student22">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Рубаненко Артем">
+            <div class="student-name">Рубаненко Артем</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student23">
+                <span class="status absent">Відсутній</span>
+            </div>
+        </div>
+        <div class="student-item" data-name="Фракіянц Максим">
+            <div class="student-name">Фракіянц Максим</div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="student24">
+                <span class="status absent">Відсутній</span>
+            </div>
         </div>
     </div>
 
+    <div class="summary">
+        Присутні: <span id="present-count">0</span> з <span id="total-count">24</span>
+    </div>
+
     <script>
-        AOS.init({ duration: 1000, once: true });
+        const students = Array.from(document.querySelectorAll('.student-item'));
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const searchInput = document.querySelector('.search-input');
+        const selectAllBtn = document.querySelector('.select-all-btn');
+        let isAllSelected = false;
+
+        // Load saved attendance from localStorage
+        function loadAttendance() {
+            checkboxes.forEach((checkbox, index) => {
+                const isChecked = localStorage.getItem(`student${index + 1}`) === 'true';
+                checkbox.checked = isChecked;
+                const statusElement = checkbox.nextElementSibling;
+                statusElement.textContent = isChecked ? 'Присутній' : 'Відсутній';
+                statusElement.classList.toggle('present', isChecked);
+                statusElement.classList.toggle('absent', !isChecked);
+            });
+            updateSummary();
+        }
+
+        // Save attendance to localStorage
+        function saveAttendance() {
+            checkboxes.forEach((checkbox, index) => {
+                localStorage.setItem(`student${index + 1}`, checkbox.checked);
+            });
+        }
+
+        // Update status and summary
+        function updateStatus(checkbox) {
+            const statusElement = checkbox.nextElementSibling;
+            statusElement.textContent = checkbox.checked ? 'Присутній' : 'Відсутній';
+            statusElement.classList.toggle('present', checkbox.checked);
+            statusElement.classList.toggle('absent', !checkbox.checked);
+            saveAttendance();
+            updateSummary();
+        }
+
+        // Update summary count
+        function updateSummary() {
+            const presentCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            document.getElementById('present-count').textContent = presentCount;
+        }
+
+        // Search functionality
+        function filterStudents() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            students.forEach(student => {
+                const name = student.dataset.name.toLowerCase();
+                student.classList.toggle('hidden', searchTerm && !name.includes(searchTerm));
+            });
+        }
+
+        // Toggle select all
+        function toggleSelectAll() {
+            isAllSelected = !isAllSelected;
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = isAllSelected;
+                updateStatus(checkbox);
+            });
+            selectAllBtn.textContent = isAllSelected ? 'Скасувати вибір' : 'Обрати всіх';
+        }
+
+        // Event listeners
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => updateStatus(checkbox));
+        });
+
+        searchInput.addEventListener('input', filterStudents);
+
+        // Initialize
+        loadAttendance();
     </script>
 </body>
 </html>
