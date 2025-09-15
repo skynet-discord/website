@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список присутності</title>
+    <title>Список присутності та дні народження</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,49 +17,71 @@
             text-align: center;
             margin-bottom: 25px;
         }
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #6c757d;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .tab-btn.active {
+            background-color: #0d6efd;
+        }
+        .tab-btn:hover {
+            background-color: #0b5ed7;
+        }
         .controls {
             margin-bottom: 20px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
-        .search-input, .select-all-btn {
+        .search-input, .select-all-btn, .birthday-input, .add-birthday-btn {
             padding: 8px;
             border: 1px solid #ced4da;
             border-radius: 4px;
             font-size: 14px;
         }
-        .search-input {
+        .search-input, .birthday-input {
             flex-grow: 1;
         }
-        .select-all-btn {
+        .select-all-btn, .add-birthday-btn {
             background-color: #0d6efd;
             color: white;
             border: none;
             cursor: pointer;
             padding: 8px 16px;
         }
-        .select-all-btn:hover {
+        .select-all-btn:hover, .add-birthday-btn:hover {
             background-color: #0b5ed7;
         }
-        .student-list {
+        .student-list, .birthday-list {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 20px;
             max-height: 400px;
             overflow-y: auto;
+            margin-bottom: 20px;
         }
-        .student-item {
+        .student-item, .birthday-item {
             display: flex;
             align-items: center;
             padding: 12px 15px;
             border-bottom: 1px solid #e9ecef;
         }
-        .student-item:last-child {
+        .student-item:last-child, .birthday-item:last-child {
             border-bottom: none;
         }
-        .student-name {
+        .student-name, .birthday-name {
             flex-grow: 1;
             font-size: 16px;
         }
@@ -85,289 +107,608 @@
             color: #dc3545;
         }
         .summary {
-            margin-top: 20px;
+            margin: 20px 0;
             text-align: center;
             font-weight: 500;
+        }
+        .birthday-date {
+            font-size: 14px;
+            color: #6c757d;
+            margin-right: 10px;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
         }
         .hidden {
             display: none;
         }
-        @media (max-width: 580px) {
-            .student-item {
+        @media (max-width: 480px) {
+            .student-item, .birthday-item {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .checkbox-container {
+            .checkbox-container, .birthday-controls {
                 margin-top: 10px;
                 align-self: flex-end;
             }
-            .controls {
+            .controls, .tab-buttons {
                 flex-direction: column;
             }
         }
+        .status-absent-blue {
+            color: white;
     </style>
 </head>
 <body>
     <h1>Список присутності</h1>
 
-    <div class="controls">
-        <input type="text" class="search-input" placeholder="Пошук за ім'ям...">
-        <button class="select-all-btn" onclick="toggleSelectAll()">Обрати всіх</button>
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab('attendance')">Присутність - Offline</button>
+        <button class="tab-btn" onclick="showTab('birthdays')">Присутність - Online</button>
     </div>
 
-    <div class="student-list">
-        <div class="student-item" data-name="Балаклієць Олександр">
-            <div class="student-name">Балаклієць Олександр</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student1">
-                <span class="status absent">Відсутній</span>
+    <div id="attendance-tab">
+        <div class="controls">
+            <input type="text" class="search-input" id="attendance-search" placeholder="Пошук за ім'ям...">
+            <button class="select-all-btn" onclick="toggleSelectAll('attendance')">Обрати всіх</button>
+        </div>
+
+        <div class="student-list" id="attendance-list">
+            <div class="student-item" data-name="Балаклієць Олександр">
+                <div class="student-name">Балаклієць Олександр</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student1-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Борисов Валерій">
+                <div class="student-name">Борисов Валерій</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student2-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Булах Максим">
+                <div class="student-name">Булах Максим</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student3-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Вакуленко Олександр">
+                <div class="student-name">Вакуленко Олександр</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student4-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Готв'янський Данило">
+                <div class="student-name">Готв'янський Данило</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student5-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Дейнека Денис">
+                <div class="student-name">Дейнека Денис</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student6-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Дятлов Микола">
+                <div class="student-name">Дятлов Микола</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student7-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Зуб Данило">
+                <div class="student-name">Зуб Данило</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student8-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Зубрицька Анастасія">
+                <div class="student-name">Зубрицька Анастасія</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student9-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Калатур Богдан">
+                <div class="student-name">Калатур Богдан</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student10-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Каніболоцька Мирослава">
+                <div class="student-name">Каніболоцька Мирослава</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student11-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Кравченко Андрій">
+                <div class="student-name">Кравченко Андрій</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student12-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Кутаков Руслан">
+                <div class="student-name">Кутаков Руслан</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student13-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Ледянкін Давид">
+                <div class="student-name">Ледянкін Давид</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student14-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Максимов Семен">
+                <div class="student-name">Максимов Семен</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student15-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Малярчук Поліна">
+                <div class="student-name">Малярчук Поліна</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student16-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Михайлін Тимур">
+                <div class="student-name">Михайлін Тимур</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student17-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Михальов Микита">
+                <div class="student-name">Михальов Микита</div>
+                <div class="checkbox-container">
+                    <span class="status absent">Уехал с родины в Германию (Предатель)</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Морозова Мирослава">
+                <div class="student-name">Морозова Мирослава</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student19-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Никифоров Володимир">
+                <div class="student-name">Никифоров Володимир</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student20-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Попко Дар'я">
+                <div class="student-name">Попко Дар'я</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student21-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Пузаненко Ілля">
+                <div class="student-name">Пузаненко Ілля</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student22-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Рубаненко Артем">
+                <div class="student-name">Рубаненко Артем</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student23-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Фракіянц Максим">
+                <div class="student-name">Фракіянц Максим</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student24-attendance">
+                    <span class="status absent">Відсутній</span>
+                </div>
             </div>
         </div>
-        <div class="student-item" data-name="Борисов Валерій">
-            <div class="student-name">Борисов Валерій</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student2">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Булах Максим">
-            <div class="student-name">Булах Максим</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student3">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Вакуленко Олександр">
-            <div class="student-name">Вакуленко Олександр</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student4">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Готв'янський Данило">
-            <div class="student-name">Готв'янський Данило</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student5">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Дейнека Денис">
-            <div class="student-name">Дейнека Денис</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student6">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Дятлов Микола">
-            <div class="student-name">Дятлов Микола</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student7">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Зуб Данило">
-            <div class="student-name">Зуб Данило</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student8">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Зубрицька Анастасія">
-            <div class="student-name">Зубрицька Анастасія</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student9">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Калатур Богдан">
-            <div class="student-name">Калатур Богдан</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student10">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Каніболоцька Мирослава">
-            <div class="student-name">Каніболоцька Мирослава</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student11">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Кравченко Андрій">
-            <div class="student-name">Кравченко Андрій</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student12">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Кутаков Руслан">
-            <div class="student-name">Кутаков Руслан</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student13">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Ледянкін Давид">
-            <div class="student-name">Ледянкін Давид</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student14">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Максимов Семен">
-            <div class="student-name">Максимов Семен</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student15">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Малярчук Поліна">
-            <div class="student-name">Малярчук Поліна</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student16">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Михайлін Тимур">
-            <div class="student-name">Михайлін Тимур</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student17">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Михальов Микита">
-            <div class="student-name">Михальов Микита</div>
-            <div class="checkbox-container">
-                <span class="status absent">Немец наш</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Морозова Мирослава">
-            <div class="student-name">Морозова Мирослава</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student19">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Никифоров Володимир">
-            <div class="student-name">Никифоров Володимир</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student20">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Никифоров Володимир">
-            <div class="student-name">Наум Меркотан</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student21">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Попко Дар'я">
-            <div class="student-name">Попко Дар'я</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student22">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Пузаненко Ілля">
-            <div class="student-name">Пузаненко Ілля</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student23">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Рубаненко Артем">
-            <div class="student-name">Рубаненко Артем</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student24">
-                <span class="status absent">Відсутній</span>
-            </div>
-        </div>
-        <div class="student-item" data-name="Фракіянц Максим">
-            <div class="student-name">Фракіянц Максим</div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="student25">
-                <span class="status absent">Відсутній</span>
-            </div>
+
+        <div class="summary">
+            Присутні: <span id="present-count-attendance">0</span> з <span id="total-count-attendance">24</span>
         </div>
     </div>
 
-    <div class="summary">
-        Присутні: <span id="present-count">0</span> з <span id="total-count">24</span>
+    <div id="birthdays-tab" class="hidden">
+        <div class="controls">
+            <input type="text" class="search-input" id="birthdays-search" placeholder="Пошук за ім'ям...">
+            <button class="select-all-btn" onclick="toggleSelectAll('birthdays')">Обрати всіх</button>
+        </div>
+
+        <div class="student-list" id="birthdays-attendance-list">
+            <div class="student-item" data-name="Балаклієць Олександр">
+                <div class="student-name">Балаклієць Олександр</div>
+                 <input type="checkbox" id="student3-birthdays">
+                <div class="checkbox-container">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Борисов Валерій">
+                <div class="student-name">Борисов Валерій</div>
+                 <input type="checkbox" id="student3-birthdays">
+                <div class="checkbox-container">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Булах Максим">
+                <div class="student-name">Булах Максим</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student3-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Вакуленко Олександр">
+                <div class="student-name">Вакуленко Олександр</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student4-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Готв'янський Данило">
+                <div class="student-name">Готв'янський Данило</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student5-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Дейнека Денис">
+                <div class="student-name">Дейнека Денис</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student6-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Дятлов Микола">
+                <div class="student-name">Дятлов Микола</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student7-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Зуб Данило">
+                <div class="student-name">Зуб Данило</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student8-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Зубрицька Анастасія">
+                <div class="student-name">Зубрицька Анастасія</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student9-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Калатур Богдан">
+                <div class="student-name">Калатур Богдан</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student10-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Каніболоцька Мирослава">
+                <div class="student-name">Каніболоцька Мирослава</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student11-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Кравченко Андрій">
+                <div class="student-name">Кравченко Андрій</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student12-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Кутаков Руслан">
+                <div class="student-name">Кутаков Руслан</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student13-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Ледянкін Давид">
+                <div class="student-name">Ледянкін Давид</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student14-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Максимов Семен">
+                <div class="student-name">Максимов Семен</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student15-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Малярчук Поліна">
+                <div class="student-name">Малярчук Поліна</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student16-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Михайлін Тимур">
+                <div class="student-name">Михайлін Тимур</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student17-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Михальов Микита">
+                <div class="student-name">Михальов Микита</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student18-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Морозова Мирослава">
+                <div class="student-name">Морозова Мирослава</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student19-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Никифоров Володимир">
+                <div class="student-name">Никифоров Володимир</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student20-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Попко Дар'я">
+                <div class="student-name">Попко Дар'я</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student21-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Пузаненко Ілля">
+                <div class="student-name">Пузаненко Ілля</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student22-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Рубаненко Артем">
+                <div class="student-name">Рубаненко Артем</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student23-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+            <div class="student-item" data-name="Фракіянц Максим">
+                <div class="student-name">Фракіянц Максим</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="student24-birthdays">
+                    <span class="status absent">Відсутній</span>
+                </div>
+            </div>
+        </div>
+        <div class="summary">
+            Присутні: <span id="present-count-attendance">0</span> з <span id="total-count-attendance">25</span>
+        </div>
     </div>
 
     <script>
-        const students = Array.from(document.querySelectorAll('.student-item'));
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const searchInput = document.querySelector('.search-input');
-        const selectAllBtn = document.querySelector('.select-all-btn');
-        let isAllSelected = false;
+        const predefinedStudents = [
+            "Балаклієць Олександр",
+            "Борисов Валерій",
+            "Булах Максим",
+            "Вакуленко Олександр",
+            "Готв'янський Данило",
+            "Дейнека Денис",
+            "Дятлов Микола",
+            "Зуб Данило",
+            "Зубрицька Анастасія",
+            "Калатур Богдан",
+            "Каніболоцька Мирослава",
+            "Кравченко Андрій",
+            "Кутаков Руслан",
+            "Ледянкін Давид",
+            "Максимов Семен",
+            "Малярчук Поліна",
+            "Михайлін Тимур",
+            "Михальов Микита",
+            "Морозова Мирослава",
+            "Никифоров Володимир",
+            "Попко Дар'я",
+            "Пузаненко Ілля",
+            "Рубаненко Артем",
+            "Фракіянц Максим"
+        ];
+
+        const attendanceTab = document.getElementById('attendance-tab');
+        const birthdaysTab = document.getElementById('birthdays-tab');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const attendance = {
+            students: Array.from(document.querySelectorAll('#attendance-list .student-item')),
+            checkboxes: document.querySelectorAll('#attendance-list input[type="checkbox"]'),
+            searchInput: document.getElementById('attendance-search'),
+            selectAllBtn: document.querySelector('#attendance-tab .select-all-btn'),
+            presentCount: document.getElementById('present-count-attendance'),
+            totalCount: document.getElementById('total-count-attendance'),
+            isAllSelected: false
+        };
+        const birthdays = {
+            students: Array.from(document.querySelectorAll('#birthdays-attendance-list .student-item')),
+            checkboxes: document.querySelectorAll('#birthdays-attendance-list input[type="checkbox"]'),
+            searchInput: document.getElementById('birthdays-search'),
+            selectAllBtn: document.querySelector('#birthdays-tab .select-all-btn'),
+            presentCount: document.getElementById('present-count-birthdays'),
+            totalCount: document.getElementById('total-count-birthdays'),
+            isAllSelected: false
+        };
+        const birthdayList = document.getElementById('birthday-list');
+        const birthdayNameInput = document.getElementById('birthday-name');
+        const birthdayDateInput = document.getElementById('birthday-date');
+
+        // Toggle between tabs
+        function showTab(tab) {
+            if (tab === 'attendance') {
+                attendanceTab.classList.remove('hidden');
+                birthdaysTab.classList.add('hidden');
+                tabButtons[0].classList.add('active');
+                tabButtons[1].classList.remove('active');
+            } else {
+                attendanceTab.classList.add('hidden');
+                birthdaysTab.classList.remove('hidden');
+                tabButtons[0].classList.remove('active');
+                tabButtons[1].classList.add('active');
+            }
+        }
 
         // Load saved attendance from localStorage
-        function loadAttendance() {
-            checkboxes.forEach((checkbox, index) => {
-                const isChecked = localStorage.getItem(`student${index + 1}`) === 'true';
+        function loadAttendance(tab) {
+            const prefix = tab === 'attendance' ? 'student' : 'student-birthday';
+            const config = tab === 'attendance' ? attendance : birthdays;
+            config.checkboxes.forEach((checkbox, index) => {
+                const isChecked = localStorage.getItem(`${prefix}${index + 1}`) === 'true';
                 checkbox.checked = isChecked;
                 const statusElement = checkbox.nextElementSibling;
                 statusElement.textContent = isChecked ? 'Присутній' : 'Відсутній';
                 statusElement.classList.toggle('present', isChecked);
                 statusElement.classList.toggle('absent', !isChecked);
             });
-            updateSummary();
+            updateSummary(tab);
         }
 
         // Save attendance to localStorage
-        function saveAttendance() {
-            checkboxes.forEach((checkbox, index) => {
-                localStorage.setItem(`student${index + 1}`, checkbox.checked);
+        function saveAttendance(tab) {
+            const prefix = tab === 'attendance' ? 'student' : 'student-birthday';
+            const config = tab === 'attendance' ? attendance : birthdays;
+            config.checkboxes.forEach((checkbox, index) => {
+                localStorage.setItem(`${prefix}${index + 1}`, checkbox.checked);
             });
         }
 
         // Update status and summary
-        function updateStatus(checkbox) {
+        function updateStatus(checkbox, tab) {
             const statusElement = checkbox.nextElementSibling;
             statusElement.textContent = checkbox.checked ? 'Присутній' : 'Відсутній';
             statusElement.classList.toggle('present', checkbox.checked);
             statusElement.classList.toggle('absent', !checkbox.checked);
-            saveAttendance();
-            updateSummary();
+            saveAttendance(tab);
+            updateSummary(tab);
         }
 
         // Update summary count
-        function updateSummary() {
-            const presentCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            document.getElementById('present-count').textContent = presentCount;
+        function updateSummary(tab) {
+            const config = tab === 'attendance' ? attendance : birthdays;
+            const presentCount = config.checkboxes.checked().length;
+            config.presentCount.textContent = presentCount;
         }
 
         // Search functionality
-        function filterStudents() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            students.forEach(student => {
+        function filterStudents(tab) {
+            const config = tab === 'attendance' ? attendance : birthdays;
+            const searchTerm = config.searchInput.value.trim().toLowerCase();
+            config.students.forEach(student => {
                 const name = student.dataset.name.toLowerCase();
                 student.classList.toggle('hidden', searchTerm && !name.includes(searchTerm));
             });
         }
 
         // Toggle select all
-        function toggleSelectAll() {
-            isAllSelected = !isAllSelected;
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = isAllSelected;
-                updateStatus(checkbox);
+        function toggleSelectAll(tab) {
+            const config = tab === 'attendance' ? attendance : birthdays;
+            config.isAllSelected = !config.isAllSelected;
+            config.checkboxes.forEach(checkbox => {
+                checkbox.checked = config.isAllSelected;
+                updateStatus(checkbox, tab);
             });
-            selectAllBtn.textContent = isAllSelected ? 'Скасувати вибір' : 'Обрати всіх';
+            config.selectAllBtn.textContent = config.isAllSelected ? 'Скасувати вибір' : 'Обрати всіх';
+        }
+
+        // Birthday management
+        function loadBirthdays() {
+            let birthdays = JSON.parse(localStorage.getItem('birthdays') || '[]');
+
+            // Initialize with predefined students if localStorage is empty
+            if (birthdays.length === 0) {
+                birthdays = predefinedStudents.map(name => ({ name, date: 'Не призначено' }));
+                localStorage.setItem('birthdays', JSON.stringify(birthdays));
+            }
+
+            birthdayList.innerHTML = '';
+            birthdays.forEach((birthday, index) => {
+                const item = document.createElement('div');
+                item.className = 'birthday-item';
+                item.dataset.name = birthday.name;
+                item.innerHTML = `
+                    <div class="birthday-name">${birthday.name}</div>
+                    <div class="birthday-controls">
+                        <span class="birthday-date">${birthday.date}</span>
+                        <button class="delete-btn" onclick="deleteBirthday(${index})">Видалити</button>
+                    </div>
+                `;
+                birthdayList.appendChild(item);
+            });
+        }
+
+        function addBirthday() {
+            const name = birthdayNameInput.value.trim();
+            const date = birthdayDateInput.value || 'Не призначено';
+            if (name) {
+                const birthdays = JSON.parse(localStorage.getItem('birthdays') || '[]');
+                birthdays.push({ name, date });
+                localStorage.setItem('birthdays', JSON.stringify(birthdays));
+                birthdayNameInput.value = '';
+                birthdayDateInput.value = '';
+                loadBirthdays();
+            }
+        }
+
+        function deleteBirthday(index) {
+            const birthdays = JSON.parse(localStorage.getItem('birthdays') || '[]');
+            birthdays.splice(index, 1);
+            localStorage.setItem('birthdays', JSON.stringify(birthdays));
+            loadBirthdays();
         }
 
         // Event listeners
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => updateStatus(checkbox));
+        attendance.checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => updateStatus(checkbox, 'attendance'));
+        });
+        birthdays.checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => updateStatus(checkbox, 'birthdays'));
         });
 
-        searchInput.addEventListener('input', filterStudents);
+        attendance.searchInput.addEventListener('input', () => filterStudents('attendance'));
+        birthdays.searchInput.addEventListener('input', () => filterStudents('birthdays'));
 
         // Initialize
-        loadAttendance();
+        loadAttendance('attendance');
+        loadAttendance('birthdays');
+        loadBirthdays();
+        showTab('attendance');
     </script>
 </body>
 </html>
-
