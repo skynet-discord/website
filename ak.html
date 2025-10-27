@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Административный кодекс — GTA 5 RP Форум</title>
+  <style>
+        body {
+      background: #191a1e;
+      color: #ececec;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: flex-start;
+      gap: 18px;
+      background: #232326;
+      padding: 16px 38px 16px 38px;
+      box-shadow: 0 2px 11px #0006;
+    }
+    .nav-bar a {
+      text-decoration: none;
+    }
+    .nav-bar button {
+      background: #313236;
+      color: #ff7f2a;
+      font-weight: 600;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      padding: 13px 29px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+      transition: background .16s, color .16s, box-shadow .16s;
+      box-shadow: 0 2px 10px #1b0e0e17;
+      border-bottom: 2px solid #ff7f2a;
+    }
+    .nav-bar button:hover {
+      background: #ff7f2a;
+      color: #232326;
+      box-shadow: 0 7px 33px #ff7f2a45;
+      transform: translateY(-2px) scale(1.05);
+    }
+    .breadcrumbs {
+      padding: 5px 40px 14px 46px;
+      background: #232326;
+      color: #bbb;
+      font-size: 0.97em;
+      letter-spacing: 0.04em;
+    }
+    .breadcrumbs span {
+      opacity: 0.7;
+    }
+    .forum-section {
+      max-width: 1820px;
+      margin: 40px auto 0 auto;
+      padding: 2px 0 44px 0;
+      background: #232326;
+      border-radius: 15px;
+      box-shadow: 0 2px 24px #0a0a0e93;
+      position: relative;
+    }
+    .forum-title {
+      font-size: 1.35em;
+      margin-bottom: 11px;
+      color: #ff7f2a;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-align: left;
+      padding: 24px 32px 8px 32px;
+    }
+    .search-block {
+      display: flex;
+      align-items: center;
+      padding: 0 32px 24px 32px;
+    }
+    .search-block input[type="text"] {
+      width: 320px;
+      border-radius: 8px;
+      padding: 8px 11px;
+      background: #23242a;
+      border: 1px solid #393943;
+      outline: none;
+      color: #ff7f2a;
+      font-size: 1em;
+      margin-right: 18px;
+      transition: border .17s;
+    }
+    .search-block input[type="text"]:focus {
+      border: 1.5px solid #ff7f2a;
+      background: #292932;
+    }
+    table.ak-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: none;
+    }
+    table.ak-table tr {
+      border-bottom: 1px solid #242427;
+      transition: background .13s;
+    }
+    table.ak-table tr:last-child { border-bottom: none; }
+    table.ak-table tr:hover { background: #232a36; }
+    table.ak-table td, table.ak-table th {
+      padding: 18px 12px 13px 22px;
+      font-size: 1.08em;
+      vertical-align: top;
+    }
+    table.ak-table th {
+      color: #ff7f2a;
+      font-weight: 700;
+      text-align: left;
+      border-bottom: 2px solid #393943;
+      background: #232326;
+      font-size: 1.13em;
+      letter-spacing: 0.03em;
+    }
+    .art-num {
+      color: #ffa650;
+      font-weight: 700;
+      min-width: 110px;
+      white-space:nowrap;
+    }
+    .art-desc {
+      color: #ececec;
+      opacity: 0.95;
+    }
+    @media (max-width: 900px) {
+      .forum-section { max-width: 97vw; }
+      .nav-bar { padding: 12px 8px; gap: 8px; }
+      .breadcrumbs { padding-left: 16px; padding-right: 8px;}
+      .forum-title, .search-block { padding: 8px 2vw 8px 2vw; }
+      table.ak-table td, table.ak-table th { padding: 12px 2vw 11px 2vw;}
+      .search-block input[type="text"] { width: 95vw;}
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-bar">
+    <a href="index.html"><button>Главная страница</button></a>
+    <a href="law.html"><button>Законодательная база</button></a>
+    <a href="registry.html"><button>Реестр коллекционеров</button></a>
+    <a href="profile.html"><button>Профиль разработчика сайта</button></a>
+  </div>
+  <div class="breadcrumbs">
+    <span>Главная страница &nbsp;>&nbsp; Законодательная база &nbsp;>&nbsp; Административный кодекс</span>
+  </div>
+  <div class="forum-section">
+    <div class="forum-title">Статьи административного кодекса</div>
+    <div class="search-block">
+      <input type="text" id="searchInput" placeholder="Поиск по номеру или статье...">
+    </div>
+    <table class="ak-table" id="akTable">
+      <thead>
+        <tr><th>Номер</th><th>Описание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="art-num">Статья 15 ч.1</td><td class="art-desc">Мелкое хулиганство — 10-20 мин или 5.000$-10.000$</td></tr>
+        <tr><td class="art-num">Статья 18</td><td class="art-desc">Нахождение в общественных местах ((ЗЗ)) в неприемлемом виде — 10-30 мин или 5.000$-10.000$</td></tr>
+        <tr><td class="art-num">Статья 20</td><td class="art-desc">Нарушение правил обращения с оружием, спецсредствами, инструментами и спортивным инвентарем — 20-40 мин или 10.000$-25.000$</td></tr>
+        <tr><td class="art-num">Статья 22 ч.1</td><td class="art-desc">Незаконное проникновение/нахождение на охраняемом объекте — 20-40 мин или 10.000$-15.000$</td></tr>
+        <tr><td class="art-num">Статья 24</td><td class="art-desc">Контрабанда — 20-40 мин</td></tr>
+        <tr><td class="art-num">Статья 26</td><td class="art-desc">Угроза расправой гражданскому лицу — 20-30 мин</td></tr>
+        <tr><td class="art-num">Статья 30</td><td class="art-desc">Курение в общественных местах — 10-20 мин или 5.000$-10.000$</td></tr>
+        <tr><td class="art-num">Статья 36</td><td class="art-desc">Кража, то есть тайное хищение чужого имущества — 30-40 мин или 5.000$ + ущерб</td></tr>
+        <tr><td class="art-num">Статья 37</td><td class="art-desc">Угон авто — 20-30 мин</td></tr>
+        <tr><td class="art-num">Статья 39</td><td class="art-desc">Незаконное проникновение в жилище — 30-40 мин</td></tr>
+        <tr><td class="art-num">Статья 41</td><td class="art-desc">Нарушения в сфере добычи биологических ресурсов — 15.000$-30.000$ + изъять биорес.</td></tr>
+        <tr><td class="art-num">Статья 42</td><td class="art-desc">Утратила силу решением сената от 03.07.2025</td></tr>
+        <tr><td class="art-num">Статья 43</td><td class="art-desc">Оборот легких (3-5 гр) или тяжелых (&lt;2 гр) (Включ.) наркотиков — 20-40 мин</td></tr>
+        <tr><td class="art-num">Статья 44</td><td class="art-desc">Умышленное нанесение телесных повреждений ((10-99% HP)) — 20-40 мин</td></tr>
+        <tr><td class="art-num">Статья 44.1</td><td class="art-desc">Сутенерство/проституция в любой форме — 20-40 мин</td></tr>
+        <tr><td class="art-num">Статья 46 ч.1</td><td class="art-desc">Вмешательство/воспрепятствование в процесс задержания/ареста гражданином — 20 мин или 10.000$-15.000$</td></tr>
+        <tr><td class="art-num">Статья 46 ч.2</td><td class="art-desc">Вмешательство/воспрепятствование в процесс задержания/ареста госником — 40 мин или 15.000$-25.000$</td></tr>
+        <tr><td class="art-num">Статья 48 ч.1</td><td class="art-desc">Оскорбление представителя власти при исполнении — 20-40 мин или 15.000$-25.000$</td></tr>
+        <tr><td class="art-num">Статья 50 ч.1</td><td class="art-desc">Провокация гос. служащего при исполнении (помеха/отвлечение) — 20-40 мин или 5.000$-15.000$</td></tr>
+        <tr><td class="art-num">Статья 51</td><td class="art-desc">Неповиновение законному требованию — 20-40 мин или 10.000$</td></tr>
+        <tr><td class="art-num">Статья 52</td><td class="art-desc">Отказ от оплаты штрафа — 20-40 мин</td></tr>
+        <tr><td class="art-num">Статья 53 ч.1</td><td class="art-desc">Клевета — 20-40 мин или 15.000$-25.000$</td></tr>
+        <tr><td class="art-num">Статья 57 ч.1</td><td class="art-desc">Оскорбление, унижение чести и достоинства гражданина — 20-30 мин или 5.000$-15.000$</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const table = document.getElementById('akTable');
+    const rows = Array.from(table.getElementsByTagName('tr')).slice(1);
+
+    searchInput.addEventListener('input', function() {
+      const val = this.value.trim().toLowerCase();
+      rows.forEach(row => {
+        if (row.innerText.toLowerCase().includes(val)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
