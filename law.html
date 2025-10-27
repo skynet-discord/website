@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Законодательная база — GTA 5 RP форум стиль</title>
+  <style>
+    body {
+      background: #191a1e;
+      color: #ececec;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: flex-start;
+      gap: 18px;
+      background: #232326;
+      padding: 16px 38px 16px 38px;
+      box-shadow: 0 2px 11px #0006;
+    }
+    .nav-bar a {
+      text-decoration: none;
+    }
+    .nav-bar button {
+      background: #313236;
+      color: #ff7f2a;
+      font-weight: 600;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      padding: 13px 29px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+      transition: background .16s, color .16s, box-shadow .16s;
+      box-shadow: 0 2px 10px #1b0e0e17;
+      border-bottom: 2px solid #ff7f2a;
+    }
+    .nav-bar button:hover {
+      background: #ff7f2a;
+      color: #232326;
+      box-shadow: 0 7px 33px #ff7f2a45;
+      transform: translateY(-2px) scale(1.05);
+    }
+    .breadcrumbs {
+      padding: 5px 40px 14px 46px;
+      background: #232326;
+      color: #bbb;
+      font-size: 0.97em;
+      letter-spacing: 0.04em;
+    }
+    .breadcrumbs span {
+      opacity: 0.7;
+    }
+    .button-row {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 30px;
+      margin: 40px auto 0 auto;
+      max-width: 500px;
+      min-height: 50px;
+    }
+    .button-row a {
+      text-decoration: none;
+      flex: 1 1 300px;
+      max-width: 880px;
+      min-width: 300px;
+      display: flex;
+    }
+    .law-btn {
+      background: #232326;
+      color: #ff7f2a;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.12em;
+      padding: 28px 0;
+      margin: 0;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background .16s, color .16s, transform .13s, box-shadow .14s;
+      box-shadow: 0 2px 14px #0005;
+      width: 100%;
+      text-align: center;
+      display: block;
+    }
+    .law-btn:hover {
+      background: #313236;
+      color: #fff;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 28px #ff7f2a33;
+    }
+    @media (max-width: 900px) {
+      .button-row { flex-direction: column; gap: 18px; max-width: 97vw;}
+      .nav-bar { padding: 12px 8px; gap: 8px; }
+      .breadcrumbs { padding-left: 16px; padding-right: 8px;}
+      .button-row a { max-width: 98vw; min-width: 0; }
+      .law-btn { padding: 24px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-bar">
+    <a href="index.html"><button>Главная страница</button></a>
+    <a href="law.html"><button>Законодательная база</button></a>
+    <a href="registry.html"><button>Реестр коллекционеров</button></a>
+    <a href="profile.html"><button>Профиль разработчика сайта</button></a>
+  </div>
+  <div class="breadcrumbs">
+    <span>Главная страница &nbsp;>&nbsp; Законодательная база</span>
+  </div>
+  <div class="button-row">
+    <a href="uk.html"><button class="law-btn">Уголовный кодекс</button></a>
+    <a href="ak.html"><button class="law-btn">Административный кодекс</button></a>
+    <a href="pk.html"><button class="law-btn">Процессуальный кодекс</button></a>
+    <a href="immunity.html"><button class="law-btn">Закон о неприкосновенности</button></a>
+  </div>
+</body>
+</html>
