@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Уголовный кодекс — GTA 5 RP Форум</title>
+  <style>
+    body {
+      background: #191a1e;
+      color: #ececec;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: flex-start;
+      gap: 18px;
+      background: #232326;
+      padding: 16px 38px 16px 38px;
+      box-shadow: 0 2px 11px #0006;
+    }
+    .nav-bar a {
+      text-decoration: none;
+    }
+    .nav-bar button {
+      background: #313236;
+      color: #ff7f2a;
+      font-weight: 600;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      padding: 13px 29px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+      transition: background .16s, color .16s, box-shadow .16s;
+      box-shadow: 0 2px 10px #1b0e0e17;
+      border-bottom: 2px solid #ff7f2a;
+    }
+    .nav-bar button:hover {
+      background: #ff7f2a;
+      color: #232326;
+      box-shadow: 0 7px 33px #ff7f2a45;
+      transform: translateY(-2px) scale(1.05);
+    }
+    .breadcrumbs {
+      padding: 5px 40px 14px 46px;
+      background: #232326;
+      color: #bbb;
+      font-size: 0.97em;
+      letter-spacing: 0.04em;
+    }
+    .breadcrumbs span {
+      opacity: 0.7;
+    }
+    .forum-section {
+      max-width: 1820px;
+      margin: 40px auto 0 auto;
+      padding: 2px 0 44px 0;
+      background: #232326;
+      border-radius: 15px;
+      box-shadow: 0 2px 24px #0a0a0e93;
+      position: relative;
+    }
+    .forum-title {
+      font-size: 1.35em;
+      margin-bottom: 11px;
+      color: #ff7f2a;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-align: left;
+      padding: 24px 32px 8px 32px;
+    }
+    .search-block {
+      display: flex;
+      align-items: center;
+      padding: 0 32px 24px 32px;
+    }
+    .search-block input[type="text"] {
+      width: 320px;
+      border-radius: 8px;
+      padding: 8px 11px;
+      background: #23242a;
+      border: 1px solid #393943;
+      outline: none;
+      color: #ff7f2a;
+      font-size: 1em;
+      margin-right: 18px;
+      transition: border .17s;
+    }
+    .search-block input[type="text"]:focus {
+      border: 1.5px solid #ff7f2a;
+      background: #292932;
+    }
+    table.uk-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: none;
+    }
+    table.uk-table tr {
+      border-bottom: 1px solid #242427;
+      transition: background .13s;
+    }
+    table.uk-table tr:last-child { border-bottom: none; }
+    table.uk-table tr:hover { background: #232a36; }
+    table.uk-table td, table.uk-table th {
+      padding: 18px 12px 13px 22px;
+      font-size: 1.08em;
+      vertical-align: top;
+    }
+    table.uk-table th {
+      color: #ff7f2a;
+      font-weight: 700;
+      text-align: left;
+      border-bottom: 2px solid #393943;
+      background: #232326;
+      font-size: 1.13em;
+      letter-spacing: 0.03em;
+    }
+    .art-num {
+      color: #ffa650;
+      font-weight: 700;
+      min-width: 110px;
+      white-space:nowrap;
+    }
+    .art-desc {
+      color: #ececec;
+      opacity: 0.95;
+    }
+    @media (max-width: 900px) {
+      .forum-section { max-width: 97vw; }
+      .nav-bar { padding: 12px 8px; gap: 8px; }
+      .breadcrumbs { padding-left: 16px; padding-right: 8px;}
+      .forum-title, .search-block { padding: 8px 2vw 8px 2vw;; }
+      table.uk-table td, table.uk-table th { padding: 12px 2vw 11px 2vw;}
+      .search-block input[type="text"] { width: 95vw;}
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-bar">
+    <a href="index.html"><button>Главная страница</button></a>
+    <a href="law.html"><button>Законодательная база</button></a>
+    <a href="registry.html"><button>Реестр коллекционеров</button></a>
+    <a href="profile.html"><button>Профиль разработчика сайта</button></a>
+  </div>
+  <div class="breadcrumbs">
+    <span>Главная страница &nbsp;>&nbsp; Законодательная база &nbsp;>&nbsp; Уголовный кодекс</span>
+  </div>
+  <div class="forum-section">
+    <div class="forum-title">Статьи уголовного кодекса</div>
+    <div class="search-block">
+      <input type="text" id="searchInput" placeholder="Поиск по номеру или статье...">
+    </div>
+    <table class="uk-table" id="ukTable">
+      <thead>
+        <tr><th>Номер</th><th>Описание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="art-num">Статья №21</td><td class="art-desc">Соучастники преступления несут ответственность в равном объёме</td></tr>
+        <tr><td class="art-num">Статья №37</td><td class="art-desc">Умышленное нанесение особо тяжких телесных повреждений ((нок)) — 30-60 мин</td></tr>
+        <tr><td class="art-num">Статья №37.3</td><td class="art-desc">Причинение смерти по неосторожности ((IC смерть персонажа)) — 30-60 мин</td></tr>
+        <tr><td class="art-num">Статья №38</td><td class="art-desc">Угроза расправой должностному лицу или членам его семьи — 60-90 мин</td></tr>
+        <tr><td class="art-num">Статья №39 ч.1</td><td class="art-desc">Похищение человека — 40-70 мин</td></tr>
+        <tr><td class="art-num">Статья №44</td><td class="art-desc">Грабёж, то есть открытое хищение чужого имущества — 60 мин</td></tr>
+        <tr><td class="art-num">Статья №45</td><td class="art-desc">Разбой, то есть нападение в целях хищения чужого имущества — 60-120 мин</td></tr>
+        <tr><td class="art-num">Статья №47</td><td class="art-desc">Умышленное или совершенное по неосторожности уничтожение либо повреждение чужого или государственного имущества — 30-90 мин</td></tr>
+        <tr><td class="art-num">Статья №56</td><td class="art-desc">Терроризм — 60-120 мин</td></tr>
+        <tr><td class="art-num">Статья №59</td><td class="art-desc">Незаконное проникновение/нахождение на особо охраняемом объекте — 60-90 мин</td></tr>
+        <tr><td class="art-num">Статья №60</td><td class="art-desc">Незакон. использ/сбыт/хранение любых видов оруж. и спец.средств гос.обр. а также нарушение установленных правил обращения с оружием — 30-60 мин</td></tr>
+        <tr><td class="art-num">Статья №64</td><td class="art-desc">Оборот легких (&gt;5 гр) или тяжелых (&gt;2 гр) наркотиков — 40-60 мин</td></tr>
+        <tr><td class="art-num">Статья №64.1</td><td class="art-desc">Оборот легких (&gt;10 гр) или тяжелых (&gt;5 гр) наркотиков — 80-100 мин</td></tr>
+        <tr><td class="art-num">Статья №64.2</td><td class="art-desc">Оборот легких (&gt;25 гр) или тяжелых (&gt;10 гр) наркотиков — 100-120 мин</td></tr>
+        <tr><td class="art-num">Статья №70 ч.1</td><td class="art-desc">Побег из места лишения свободы, из-под ареста или из-под стражи — 60-90 мин</td></tr>
+        <tr><td class="art-num">Статья №73</td><td class="art-desc">Получение взятки / Дача взятки — 60-120 мин</td></tr>
+        <tr><td class="art-num">Статья №78</td><td class="art-desc">Незаконное задержание — 100 мин</td></tr>
+        <tr><td class="art-num">Статья №89</td><td class="art-desc">Посягательство на жизнь сотрудника гос.структуры — 60-120 мин</td></tr>
+        <tr><td class="art-num">Статья №90</td><td class="art-desc">Насилие, неопасное для жизни, либо угроза сотруднику — 60 мин</td></tr>
+        <tr><td class="art-num">Статья №95</td><td class="art-desc">Нарушение 3-х или более АК — 60 мин</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const table = document.getElementById('ukTable');
+    const rows = Array.from(table.getElementsByTagName('tr')).slice(1);
+
+    searchInput.addEventListener('input', function() {
+      const val = this.value.trim().toLowerCase();
+      rows.forEach(row => {
+        if (row.innerText.toLowerCase().includes(val)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
