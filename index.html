@@ -3,681 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пустынная Долина</title>
+    <title>REAPERLEGENDS CREW</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
     <style>
+        /* --- VARIABLE CONFIG --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-panel: #0f0f0f;
+            --primary: #ff1744; /* Ярко-красный */
+            --primary-dark: #b2102f;
+            --text-white: #ffffff;
+            --text-gray: #a1a1a1;
+            --glow: 0 0 15px rgba(255, 23, 68, 0.6);
+            --border-glow: 1px solid rgba(255, 23, 68, 0.3);
+        }
+
+        /* --- GLOBAL STYLES --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background: linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 50%, #2d1b4e 100%);
-            color: #e6e6e6;
-            font-family: 'Courier New', monospace;
-            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Анимированный фон с снегом и тенями */
-        .snow {
+        /* Кастомный скроллбар */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        h1, h2, h3, .logo, th {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- HEADER --- */
+        header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -2;
+            padding: 20px 5%;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 23, 68, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .shadow-figures {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.1;
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: var(--glow);
+            text-transform: uppercase;
         }
 
-        .shadow {
-            position: absolute;
-            background: #000;
-            border-radius: 50%;
-            filter: blur(10px);
-            animation: float 20s infinite linear;
+        .logo span { color: #fff; }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            50% { opacity: 0.3; }
-            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
-        }
-
-        .snowflake {
-            position: absolute;
-            color: #4a6572;
-            font-size: 20px;
-            animation: fall linear infinite;
-            user-select: none;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            border-bottom: 2px solid #6a457a;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px #fff, 0 0 10px #6a457a;
-            }
-            to {
-                text-shadow: 0 0 10px #fff, 0 0 20px #6a457a, 0 0 30px #ff4444;
-            }
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            color: #b8a0c8;
-            font-style: italic;
-        }
-
-        .game-area {
-            background: rgba(12, 12, 30, 0.9);
-            border: 1px solid #6a457a;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 30px rgba(106, 69, 122, 0.4);
-            min-height: 400px;
-            backdrop-filter: blur(10px);
+        nav a {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
             position: relative;
         }
 
-        .text-output {
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
+        nav a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
         }
 
-        .thought {
-            color: #89c2d9;
-            font-style: italic;
-            margin: 10px 0;
-            padding-left: 20px;
-            border-left: 2px solid #89c2d9;
-        }
-
-        .warning {
-            color: #ff6b6b;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        .mystery {
-            color: #d4a5e8;
-            font-style: italic;
-        }
-
-        .choice {
-            background: linear-gradient(135deg, rgba(106, 69, 122, 0.4), rgba(74, 101, 114, 0.3));
-            border: 1px solid #6a457a;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 12px 0;
+        /* Мобильное меню (бургер) */
+        .burger {
+            display: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* Темный фон с красным оттенком */
+            background: linear-gradient(0deg, var(--bg-dark) 0%, rgba(0,0,0,0.6) 100%),
+                        url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, #ff1744);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.4));
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        .btn-glitch {
+            padding: 18px 45px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
             position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .btn-glitch:hover {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            border-left: 5px solid var(--primary);
+            padding-left: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .section-header p {
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* --- RULES --- */
+        .rules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .rule-box {
+            background: var(--bg-panel);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            transition: 0.4s;
             overflow: hidden;
         }
 
-        .choice:hover {
-            background: linear-gradient(135deg, rgba(106, 69, 122, 0.6), rgba(74, 101, 114, 0.5));
-            border-color: #d4a5e8;
-            transform: translateX(10px);
-            box-shadow: 0 0 15px rgba(212, 165, 232, 0.5);
-        }
-
-        .choice::before {
-            content: '⟩';
+        .rule-box::before {
+            content: '';
             position: absolute;
-            left: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            top: 0; left: 0; width: 3px; height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: 0.4s;
+            transform-origin: bottom;
         }
 
-        .choice:hover::before {
-            opacity: 1;
+        .rule-box:hover::before {
+            transform: scaleY(1);
         }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
+        .rule-box:hover {
+            background: #161616;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .rule-number {
+            font-family: 'Orbitron';
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.05);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .rule-box h3 {
+            color: var(--text-white);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .rule-box p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* --- ROSTER / TABLE --- */
+        .roster-wrapper {
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 5px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px; /* Уменьшаем минимальную ширину, так как меньше колонок */
+        }
+
+        thead {
+            background: rgba(255, 23, 68, 0.1);
+        }
+
+        th {
+            padding: 20px;
+            text-align: left;
+            color: var(--primary);
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--text-gray);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover td {
+            color: white;
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Бейджи рангов */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: 'Orbitron';
+        }
+
+        .b-leader { background: rgba(255, 215, 0, 0.1); color: #FFD700; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .b-zam { background: rgba(255, 23, 68, 0.1); color: #ff1744; border: 1px solid rgba(255, 23, 68, 0.3); }
+        .b-member { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #020202;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .social-links {
             margin-top: 20px;
-            padding: 15px;
-            background: rgba(106, 69, 122, 0.2);
-            border-radius: 10px;
-            border: 1px solid #6a457a;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .stat-item {
-            text-align: center;
-            position: relative;
-        }
-
-        .stat-value {
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .health { color: #ff6b6b; }
-        .sanity { color: #89c2d9; }
-        .warmth { color: #ffa726; }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hidden-message {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid #ff6b6b;
+        .social-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
             border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
-            animation: shake 0.5s ease-in-out;
+            font-size: 14px;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
+        .social-btn:hover { background: var(--primary); color: white; }
 
-        .ending {
-            text-align: center;
-            padding: 30px;
-            border: 2px solid #ff6b6b;
-            border-radius: 10px;
-            margin: 20px 0;
-            animation: endingGlow 2s infinite alternate;
-        }
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
 
-        @keyframes endingGlow {
-            from { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
-            to { box-shadow: 0 0 30px rgba(255, 107, 107, 0.8); }
+            .burger { display: block; color: white; }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-panel);
+                flex-direction: column;
+                padding: 20px;
+                display: none; /* Скрыто по умолчанию */
+                border-bottom: 2px solid var(--primary);
+            }
+
+            nav.active { display: flex; }
+
+            nav ul { flex-direction: column; text-align: center; gap: 20px; }
+
+            .hero h1 { font-size: 2.5rem; }
+
+            .section-header h2 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Анимированный снег и тени -->
-    <div class="snow" id="snow"></div>
-    <div class="shadow-figures" id="shadowFigures"></div>
 
-    <div class="container">
-        <div class="header">
-            <h1>ПУСТЫННАЯ ДОЛИНА</h1>
-            <div class="subtitle">Твои выборы определяют твою судьбу... если она у тебя еще есть</div>
-        </div>
+    <header>
+        <div class="logo">REAPER<span>LEGENDS</span></div>
+        <div class="burger" onclick="toggleMenu()">☰</div>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#rules">Устав</a></li>
+                <li><a href="#sostav">Состав</a></li>
+                <li><a href="#contacts">Связь</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <div class="game-area">
-            <div class="text-output" id="textOutput">
-                <!-- Сюда будет выводиться текст игры -->
-            </div>
-
-            <div class="input-area" id="inputArea">
-                <!-- Сюда будут добавляться варианты выбора -->
-            </div>
-
-            <div class="stats" id="stats">
-                <!-- Статистика персонажа -->
-            </div>
-        </div>
+    <div id="home" class="hero">
+        <h1>We Are The Reapers</h1>
+        <p>Элитное подразделение, которое не знает пощады. Мы забираем территории, ресурсы и уважение.</p>
+        <br>
+        <a href="#rules" class="btn-glitch">Вступить в ряды</a>
     </div>
 
+    <section id="rules">
+        <div class="section-header">
+            <p>Code of Honor</p>
+            <h2>Правила Семьи</h2>
+        </div>
+
+        <div class="rules-container">
+            <div class="rule-box">
+                <span class="rule-number">01</span>
+                <h3>Иерархия</h3>
+                <p>Слово Лидера и Заместителя — закон. Любое обсуждение приказов во время мероприятий карается выговором.</p>
+            </div>
+            <div class="rule-box">
+                <span class="rule-number">02</span>
+                <h3>Адекватность</h3>
+                <p>Мы — лицо клана. Запрещен токсизм, оскорбление родных и неадекватное поведение в общем чате.</p>
+            </div>
+            <div class="rule-box">
+                <span class="rule-number">03</span>
+                <h3>Честная Игра</h3>
+                <p>Использование стороннего ПО (читов) строго запрещено. Мы побеждаем скиллом, а не софтом.</p>
+            </div>
+            <div class="rule-box">
+                <span class="rule-number">04</span>
+                <h3>Discord</h3>
+                <p>Нахождение в голосовом канале во время игры обязательно. Нет микрофона — нет инвайта на капт.</p>
+            </div>
+            <div class="rule-box">
+                <span class="rule-number">05</span>
+                <h3>Общак</h3>
+                <p>Слив склада (патроны, оружие, нарко) без разрешения старших = Черный Список.</p>
+            </div>
+            <div class="rule-box">
+                <span class="rule-number">06</span>
+                <h3>Цвет (Color)</h3>
+                <p>Обязательное ношение тега и цвета семьи на всех серверных мероприятиях.</p>
+            </div>
+    </section>
+
+    <section id="sostav">
+        <div class="section-header">
+            <p>Our Soldiers</p>
+            <h2>Капт Состав</h2>
+        </div>
+
+        <div class="roster-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ранг</th>
+                        <th>Позывной</th>
+                        <th>Специализация</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge b-leader">Legend (8)</span></td>
+                        <td>Jesus_Macduff</td>
+                        <td>Руководящий составом</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="badge b-zam">Right Hand (8)</span></td>
+                        <td>Alexander_Tiper</td>
+                        <td>Зам Руководящего состава</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="badge b-member">Shooter (6)</span></td>
+                        <td>Rafael_Salvatrucha</td>
+                        <td>Стрелок</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="badge b-member">Shooter (6)</span></td>
+                        <td>Roman_Zubajdow</td>
+                        <td>Стрелок</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="badge b-member">Shooter (6)</span></td>
+                        <td>Free_Agent</td>
+                        <td>Стрелок</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer id="contacts">
+        <div class="logo" style="font-size: 20px; margin-bottom: 20px;">REAPER<span>LEGENDS</span></div>
+        <p style="color: #666; margin-bottom: 20px;">Победа любит подготовку.</p>
+        <div class="social-links">
+            <a href="https://discord.gg/8ZXrCXp9" class="social-btn">Discord Server</a>
+        </div>
+        <br>
+        <p style="font-size: 12px; color: #333; margin-top: 30px;">&copy; 2024 REAPERLEGENDS CREW. All rights reserved.</p>
+    </footer>
+
     <script>
-        // Расширенное состояние игры
-        const gameState = {
-            hasJacket: false,
-            isSick: false,
-            hasCarKeys: false,
-            hasFlashlight: false,
-            hasWeapon: false,
-            sawShadow: false,
-            heardWhisper: false,
-            foundNote: false,
-            health: 100,
-            sanity: 100,
-            warmth: 100,
-            endings: []
-        };
-
-        // Элементы DOM
-        const textOutput = document.getElementById('textOutput');
-        const inputArea = document.getElementById('inputArea');
-        const statsElement = document.getElementById('stats');
-        const snowContainer = document.getElementById('snow');
-        const shadowContainer = document.getElementById('shadowFigures');
-
-        // Создание теней
-        function createShadows() {
-            for (let i = 0; i < 8; i++) {
-                const shadow = document.createElement('div');
-                shadow.className = 'shadow';
-                shadow.style.width = Math.random() * 100 + 50 + 'px';
-                shadow.style.height = shadow.style.width;
-                shadow.style.left = Math.random() * 100 + 'vw';
-                shadow.style.top = Math.random() * 100 + 'vh';
-                shadow.style.animationDelay = Math.random() * 20 + 's';
-                shadow.style.animationDuration = (Math.random() * 30 + 30) + 's';
-                shadowContainer.appendChild(shadow);
-            }
+        // Простой скрипт для мобильного меню
+        function toggleMenu() {
+            const nav = document.getElementById('nav-menu');
+            nav.classList.toggle('active');
         }
 
-        // Создание снежинок
-        function createSnowflakes() {
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.textContent = '❄';
-                snowflake.style.left = Math.random() * 100 + 'vw';
-                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-                snowContainer.appendChild(snowflake);
-            }
-        }
-
-        // Функция для вывода текста с анимацией
-        function printText(text, isThought = false, isWarning = false, isMystery = false) {
-            return new Promise((resolve) => {
-                const paragraph = document.createElement('div');
-
-                if (isThought) {
-                    paragraph.className = 'thought fade-in';
-                } else if (isWarning) {
-                    paragraph.className = 'warning fade-in';
-                } else if (isMystery) {
-                    paragraph.className = 'mystery fade-in';
-                } else {
-                    paragraph.className = 'fade-in';
-                }
-
-                textOutput.appendChild(paragraph);
-
-                let index = 0;
-                function typeWriter() {
-                    if (index < text.length) {
-                        paragraph.innerHTML += text.charAt(index);
-                        index++;
-                        setTimeout(typeWriter, isWarning ? 10 : 20);
-                    } else {
-                        textOutput.scrollTop = textOutput.scrollHeight;
-                        resolve();
-                    }
-                }
-
-                typeWriter();
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('active');
             });
-        }
-
-        // Функция для создания кнопок выбора
-        function createChoice(text, callback, isDangerous = false) {
-            const choice = document.createElement('div');
-            choice.className = 'choice fade-in';
-            if (isDangerous) {
-                choice.style.borderColor = '#ff6b6b';
-            }
-            choice.textContent = text;
-            choice.onclick = () => {
-                inputArea.innerHTML = '';
-                callback();
-            };
-            inputArea.appendChild(choice);
-        }
-
-        // Функция для обновления статистики
-        function updateStats() {
-            statsElement.innerHTML = `
-                <div class="stat-item">
-                    <div>Здоровье</div>
-                    <div class="stat-value health">${gameState.health}%</div>
-                </div>
-                <div class="stat-item">
-                    <div>Рассудок</div>
-                    <div class="stat-value sanity">${gameState.sanity}%</div>
-                </div>
-                <div class="stat-item">
-                    <div>Тепло</div>
-                    <div class="stat-value warmth">${gameState.warmth}%</div>
-                </div>
-            `;
-        }
-
-        // Случайные события
-        function randomEvent() {
-            const events = [
-                async () => {
-                    await printText("Вам показалось, что в окне соседнего дома мелькнула тень...", false, false, true);
-                    gameState.sawShadow = true;
-                    gameState.sanity -= 5;
-                },
-                async () => {
-                    await printText("Ветер донес до вас странный шепот: 'Не ходи туда...'", false, false, true);
-                    gameState.heardWhisper = true;
-                    gameState.sanity -= 8;
-                },
-                async () => {
-                    await printText("Вы заметили, что снег под вашими ногами странно хрустит, словно стекло...", false, false, true);
-                }
-            ];
-
-            if (Math.random() < 0.4) { // 40% шанс случайного события
-                const randomEvent = events[Math.floor(Math.random() * events.length)];
-                randomEvent();
-            }
-        }
-
-        // Начало игры
-        async function startGame() {
-            await printText("Вы просыпаетесь с тяжестью в голове. За окном - кромешная тьма, нарушаемая лишь бешеным танцем снежинок в свете фонарей.", false, false, true);
-            await printText("Голова раскалывается... Что это было вчера? Кажется, я что-то важное забыл...", true);
-            await printText("Надо поехать купить продуктов... если, конечно, магазины еще работают.", true);
-            await printText("Подходя к окну, вы видите, что весь мир поглотила метель. Термометр за окном показывает -30°C.");
-
-            createChoice("Надеть теплую куртку и перчатки", () => jacketChoice(true));
-            createChoice("Остаться в домашней одежде - ведь я только до машины", () => jacketChoice(false));
-            createChoice("Осмотреть квартиру - что-то тут не так...", () => investigateApartment());
-        }
-
-        // Расследование квартиры
-        async function investigateApartment() {
-            await printText("Вы решаете осмотреть квартиру. В прихожей лежит разбитая ваза...");
-            await printText("На столе - недопитая чашка кофе. Он все еще теплый.");
-            await printText("В спальне вы находите старую фотографию. На ней вы с кем-то, но лицо второго человека зачеркнуто.");
-            await printText("Это начинает пугать...", true);
-            gameState.sanity -= 10;
-
-            await printText("В ящике тумбочки вы находите фонарик и складной нож.");
-
-            createChoice("Взять фонарик", () => {
-                gameState.hasFlashlight = true;
-                printText("Вы взяли фонарик. Теперь в темноте будет не так страшно.").then(jacketScene);
-            });
-            createChoice("Взять нож", () => {
-                gameState.hasWeapon = true;
-                printText("Вы взяли нож. Лучше перестраховаться...").then(jacketScene);
-            });
-            createChoice("Оставить как есть и собираться", jacketScene);
-        }
-
-        async function jacketScene() {
-            await printText("Пора выбираться отсюда. Что надеть?");
-            createChoice("Надеть теплую куртку и перчатки", () => jacketChoice(true));
-            createChoice("Остаться в домашней одежде", () => jacketChoice(false));
-        }
-
-        // Выбор с курткой
-        async function jacketChoice(hasJacket) {
-            gameState.hasJacket = hasJacket;
-
-            if (hasJacket) {
-                await printText("Вы надели старую дубленку. От нее пахнет нафталином и воспоминаниями.");
-                gameState.warmth += 20;
-            } else {
-                await printText("Вы решаете, что до машины рукой подать.");
-                await printText("Открывая дверь, вы понимаете, что холод здесь... другой. Он проникает прямо в душу.", false, true);
-                gameState.warmth -= 15;
-                gameState.sanity -= 5;
-            }
-
-            await carScene();
-        }
-
-        // Сцена у машины
-        async function carScene() {
-            randomEvent();
-
-            await printText("Спускаясь по лестнице, вы замечаете, что все двери в подъезде открыты...");
-            await printText("Как будто люди уходили в такой спешке, что даже не закрылись.");
-            await printText("Подойдя к машине, вы понимаете, что ключей нет.");
-
-            createChoice("Обыскать карманы еще раз", searchPockets);
-            createChoice("Проверить, не в машине ли ключи", checkCar);
-            createChoice("Просто пойти пешком - тут что-то нечисто", () => keysChoice(false));
-        }
-
-        async function searchPockets() {
-            await printText("Вы тщательно обыскиваете карманы... и находите записку:");
-            await printText("'ОНИ СЛЕДУЮТ ЗА ТЕНЯМИ. НЕ СМОТРИ В ОКНА. 23:17'", false, true);
-            gameState.foundNote = true;
-            gameState.sanity -= 15;
-
-            createChoice("Вернуться за ключами", () => keysChoice(true));
-            createChoice("Идти пешком - тут явно что-то не так", () => keysChoice(false));
-        }
-
-        async function checkCar() {
-            await printText("Вы подходите к машине... и замечаете, что все стекла покрыты изнутри инеем.");
-            await printText("Странно... Машина же должна быть теплее, чем на улице...", true);
-            await printText("Вдруг из-под снега на лобовом стекле проявляется лицо!", false, true);
-            gameState.sanity -= 20;
-
-            createChoice("Отпрянуть назад", () => {
-                printText("Вы отскакиваете от машины. Сердце бешено колотится.").then(() => keysChoice(false));
-            });
-            createChoice("Присмотреться ближе", () => {
-                printText("Присмотревшись, вы понимаете - это ваше отражение... Или нет?", false, true)
-                .then(() => {
-                    gameState.sanity -= 10;
-                    keysChoice(false);
-                });
-            });
-        }
-
-        // Выбор с ключами
-        async function keysChoice(goBack) {
-            if (goBack) {
-                await printText("Вы бежите обратно в подъезд. Лестница кажется бесконечной...");
-                await printText("Ключи на месте. Но пока вы их брали, вам показалось, что за спиной кто-то дышал.", false, true);
-                gameState.hasCarKeys = true;
-                gameState.sanity -= 10;
-
-                await printText("Возвращаясь к машине, вы замечаете, что снег успел полностью замести ваш след.");
-                await printText("Машина не заводится. Аккумулятор мертв, как и все вокруг.", false, true);
-            }
-
-            await printText("Придется идти пешком. Магазин в 15 минутах ходьбы... если он еще там.");
-
-            if (!gameState.hasJacket) {
-                await printText("Холод становится невыносимым. Кости ломит, пальцы немеют.", false, true);
-                gameState.health -= 25;
-                gameState.warmth -= 30;
-            }
-
-            await streetScene();
-        }
-
-        // Сцена на улице - несколько развилок
-        async function streetScene() {
-            randomEvent();
-
-            await printText("Улица перед вами - белая пустыня. Ни движения, ни звуков.");
-            await printText("Фонари мигают, отбрасывая причудливые тени.");
-
-            createChoice("Идти прямо по главной дороге", mainRoad);
-            createChoice("Срезать через парк - там может быть теплее", parkPath);
-            createChoice("Заглянуть в соседний дом за помощью", neighborHouse);
-        }
-
-        async function mainRoad() {
-            await printText("Идя по главной дороге, вы замечаете брошенные машины.");
-            await printText("В одной из них сидит человек... неподвижный, покрытый инеем.", false, true);
-            gameState.sanity -= 15;
-
-            createChoice("Подойти ближе", investigateCar);
-            createChoice("Ускорить шаг", hurryPast);
-        }
-
-        async function parkPath() {
-            await printText("Парк встретил вас гробовой тишиной. Деревья стоят как замерзшие великаны.");
-            await printText("Вдалеке мелькает огонек...");
-
-            createChoice("Пойти на огонек", followLight);
-            createChoice("Обойти парк стороной", avoidPark);
-        }
-
-        async function neighborHouse() {
-            await printText("Дверь в соседний дом не заперта. Внутри - полный беспорядок.");
-            await printText("На столе лежит дневник с последней записью:");
-            await printText("'Они приходят с снегом. Не дай им увидеть тебя. Беги.'", false, true);
-            gameState.sanity -= 20;
-
-            createChoice("Взять дневник с собой", takeDiary);
-            createChoice("Немедленно уйти", leaveHouse);
-        }
-
-        // Развилки сценария
-        async function investigateCar() {
-            await printText("Подойдя ближе, вы видите, что человек... не настоящий. Это манекен.");
-            await printText("Но откуда на манекене иней изнутри машины?", true);
-            gameState.sanity -= 10;
-            finalScene();
-        }
-
-        async function followLight() {
-            await printText("Огонек ведет вас вглубь парка. Вдруг он гаснет.");
-            await printText("Вы остаетесь в полной темноте... и слышите шепот сзади: 'Ты опоздал...'", false, true);
-            gameState.sanity -= 25;
-            badEnding("Потерянный в темноте");
-        }
-
-        // Финальная сцена с несколькими концовками
-        async function finalScene() {
-            await printText("Наконец-то вы у магазина. Двери выломаны, внутри - хаос.");
-            await printText("На полу валяются пустые упаковки, будто здесь был погром.");
-
-            if (gameState.sanity < 30) {
-                await printText("Голоса в голове становятся громче... Они говорят, что все это сон...", false, true);
-                createChoice("Прислушаться к голосам", () => badEnding("Безумие"));
-                createChoice("Попытаться взять себя в руки", investigateStore);
-            } else {
-                investigateStore();
-            }
-        }
-
-        async function investigateStore() {
-            await printText("В глубине магазина горит аварийный свет. Вы слышите странные звуки...");
-
-            createChoice("Идти на звук", followSound);
-            createChoice("Быстро собрать что можно и уходить", grabSupplies);
-            createChoice("Проверить склад", checkStorage);
-        }
-
-        async function followSound() {
-            await printText("Звук ведет вас в подсобку. Там вы находите рацию!");
-            await printText("Из рации доносится голос: '...повторяем, эвакуационный пункт на стадионе...'");
-            goodEnding("Спасение");
-        }
-
-        async function grabSupplies() {
-            await printText("Вы хватаете консервы и выбегаете из магазина...");
-            await printText("Но на улице вас ждет туман, из которого проступают силуэты...", false, true);
-            mysteriousEnding("Исчезновение");
-        }
-
-        // Концовки
-        function goodEnding(title) {
-            const ending = document.createElement('div');
-            ending.className = 'ending';
-            ending.innerHTML = `
-                <h2>КОНЦОВКА: ${title}</h2>
-                <p>Вы добрались до стадиона, где организовали убежище для выживших.</p>
-                <p>Теперь ваша задача - выжить и понять, что случилось с миром...</p>
-                <p>Но впереди еще много зимних ночей...</p>
-            `;
-            textOutput.appendChild(ending);
-            gameState.endings.push(title);
-            showEndingStats();
-        }
-
-        function badEnding(title) {
-            const ending = document.createElement('div');
-            ending.className = 'ending';
-            ending.innerHTML = `
-                <h2>ПЛОХАЯ КОНЦОВКА: ${title}</h2>
-                <p>Голоса в вашей голове победили. Вы стали частью тишины...</p>
-                <p>Теперь вы один из них. Один из тех, кто следует за тенями.</p>
-            `;
-            textOutput.appendChild(ending);
-            gameState.endings.push(title);
-            showEndingStats();
-        }
-
-        function mysteriousEnding(title) {
-            const ending = document.createElement('div');
-            ending.className = 'ending';
-            ending.innerHTML = `
-                <h2>ТАИНСТВЕННАЯ КОНЦОВКА: ${title}</h2>
-                <p>Силуэты в тумане приблизились... и вы поняли.</p>
-                <p>Они не враги. Они - свидетели. Свидетели того, что должно произойти.</p>
-                <p>Ваше путешествие только начинается...</p>
-            `;
-            textOutput.appendChild(ending);
-            gameState.endings.push(title);
-            showEndingStats();
-        }
-
-        function showEndingStats() {
-            createChoice("Начать новую игру", () => location.reload());
-        }
-
-        // Запуск игры
-        window.onload = function() {
-            createSnowflakes();
-            createShadows();
-            startGame();
-            updateStats();
-        };
+        });
     </script>
+
 </body>
 </html>
